@@ -203,6 +203,7 @@
   #toc a:hover { color: hsl(0 0% 88%); }
   #toc a.toc-active { color: #D17D59; border-left-color: #D17D59; }
   #toc a.toc-h3 { padding-left: 1.375rem; margin-left: -0.625rem; font-size: 0.775rem; }
+  .font-btn:hover { color: #D17D59 !important; }
 </style>
 </head>
 <body>
@@ -363,6 +364,41 @@
         `;
       });
   }
+</script>
+
+<!-- Font size control — same as index.html, persists across both pages via localStorage -->
+<div style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:100;display:flex;align-items:center;gap:0.125rem;background:#2e2e2c;border:1px solid hsl(240 3.7% 20%);border-radius:0.375rem;padding:0.25rem 0.375rem;font-size:14px;">
+  <button id="font-dec" class="font-btn" onclick="adjFont(-1)" aria-label="Decrease font size" title="Smaller text"
+    style="background:none;border:none;cursor:pointer;color:hsl(0 0% 52%);font-family:ui-monospace,monospace;font-size:11px;padding:0.125rem 0.5rem;border-radius:0.25rem;line-height:1.4;transition:color 0.12s;">A−</button>
+  <span id="font-pct"
+    style="font-family:ui-monospace,monospace;font-size:9px;color:hsl(0 0% 36%);min-width:1.875rem;text-align:center;display:inline-block;">100%</span>
+  <button id="font-inc" class="font-btn" onclick="adjFont(1)" aria-label="Increase font size" title="Larger text"
+    style="background:none;border:none;cursor:pointer;color:hsl(0 0% 52%);font-family:ui-monospace,monospace;font-size:11px;padding:0.125rem 0.5rem;border-radius:0.25rem;line-height:1.4;transition:color 0.12s;">A+</button>
+</div>
+<script>
+  (function () {
+    var steps = [13, 14, 15, 16, 17, 18, 19, 20];
+    var base = 16;
+    function getSize() { return parseInt(localStorage.getItem('wsFontSize') || base, 10); }
+    function setSize(sz) {
+      sz = Math.max(steps[0], Math.min(steps[steps.length - 1], sz));
+      document.documentElement.style.fontSize = sz + 'px';
+      localStorage.setItem('wsFontSize', sz);
+      var pct = document.getElementById('font-pct');
+      if (pct) pct.textContent = Math.round(sz / base * 100) + '%';
+      var dec = document.getElementById('font-dec');
+      var inc = document.getElementById('font-inc');
+      if (dec) { dec.disabled = sz <= steps[0]; dec.style.opacity = sz <= steps[0] ? '0.3' : '1'; }
+      if (inc) { inc.disabled = sz >= steps[steps.length - 1]; inc.style.opacity = sz >= steps[steps.length - 1] ? '0.3' : '1'; }
+    }
+    window.adjFont = function (dir) {
+      var sz = getSize();
+      var idx = steps.indexOf(sz);
+      if (idx === -1) idx = steps.indexOf(base);
+      setSize(steps[Math.max(0, Math.min(steps.length - 1, idx + dir))]);
+    };
+    setSize(getSize());
+  })();
 </script>
 
 </body>

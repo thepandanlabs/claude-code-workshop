@@ -62,16 +62,16 @@
     color: #D17D59;
     margin-bottom: 0.5rem;
   }
-  /* Left panel border: bottom on mobile, right on md+ */
-  .terminal-panel-left {
-    border-bottom: 1px solid #D17D59;
-  }
+  /* Left panel: bottom border on mobile only (separator div handles desktop) */
+  .terminal-panel-left { border-bottom: 1px solid #D17D59; }
+  @media (min-width: 768px) { .terminal-panel-left { border-bottom: none; } }
+  /* Full-height vertical separator between panels — desktop only */
+  .terminal-divider { display: none; }
   @media (min-width: 768px) {
-    .terminal-panel-left {
-      border-bottom: none;
-      border-right: 1px solid #D17D59;
-    }
+    .terminal-divider { display: block; width: 1px; background-color: #D17D59; flex-shrink: 0; }
   }
+  /* Font control buttons */
+  .font-btn:hover { color: #D17D59 !important; }
   /* ASCII block art scaled to fit inside the terminal box left panel */
   .ascii-logo-small {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -202,6 +202,9 @@
           </div>
         </div>
 
+        <!-- Vertical divider: full-height solid line, desktop only -->
+        <div class="terminal-divider" aria-hidden="true"></div>
+
         <!-- Right panel: workshop vitals -->
         <div class="p-6 md:p-8 md:w-80 shrink-0">
           <div class="terminal-panel-heading">What you'll build</div>
@@ -225,8 +228,8 @@
   </header>
 
   <!-- ===== Lead paragraph ===== -->
-  <section class="mb-16">
-    <div class="max-w-3xl text-fg-muted leading-relaxed">
+  <section class="mb-16 text-center">
+    <div class="max-w-2xl mx-auto text-fg-muted leading-relaxed">
       <p class="mb-4">
         You already use Claude, ChatGPT, or Gemini in a chat tab. This workshop is about everything that <em class="text-fg-base not-italic">isn't</em> a chat tab — files on disk, durable state, deterministic CLI output, and tests that pass or fail. We build one small tool together, end to end, the right way.
       </p>
@@ -488,6 +491,41 @@
   </footer>
 
 </div>
+
+<!-- Font size control — persists via localStorage, control itself uses px so it doesn't scale -->
+<div style="position:fixed;bottom:1.25rem;right:1.25rem;z-index:100;display:flex;align-items:center;gap:0.125rem;background:#2e2e2c;border:1px solid hsl(240 3.7% 20%);border-radius:0.375rem;padding:0.25rem 0.375rem;font-size:14px;">
+  <button id="font-dec" class="font-btn" onclick="adjFont(-1)" aria-label="Decrease font size" title="Smaller text"
+    style="background:none;border:none;cursor:pointer;color:hsl(0 0% 52%);font-family:ui-monospace,monospace;font-size:11px;padding:0.125rem 0.5rem;border-radius:0.25rem;line-height:1.4;transition:color 0.12s;">A−</button>
+  <span id="font-pct"
+    style="font-family:ui-monospace,monospace;font-size:9px;color:hsl(0 0% 36%);min-width:1.875rem;text-align:center;display:inline-block;">100%</span>
+  <button id="font-inc" class="font-btn" onclick="adjFont(1)" aria-label="Increase font size" title="Larger text"
+    style="background:none;border:none;cursor:pointer;color:hsl(0 0% 52%);font-family:ui-monospace,monospace;font-size:11px;padding:0.125rem 0.5rem;border-radius:0.25rem;line-height:1.4;transition:color 0.12s;">A+</button>
+</div>
+<script>
+  (function () {
+    var steps = [13, 14, 15, 16, 17, 18, 19, 20];
+    var base = 16;
+    function getSize() { return parseInt(localStorage.getItem('wsFontSize') || base, 10); }
+    function setSize(sz) {
+      sz = Math.max(steps[0], Math.min(steps[steps.length - 1], sz));
+      document.documentElement.style.fontSize = sz + 'px';
+      localStorage.setItem('wsFontSize', sz);
+      var pct = document.getElementById('font-pct');
+      if (pct) pct.textContent = Math.round(sz / base * 100) + '%';
+      var dec = document.getElementById('font-dec');
+      var inc = document.getElementById('font-inc');
+      if (dec) { dec.disabled = sz <= steps[0]; dec.style.opacity = sz <= steps[0] ? '0.3' : '1'; }
+      if (inc) { inc.disabled = sz >= steps[steps.length - 1]; inc.style.opacity = sz >= steps[steps.length - 1] ? '0.3' : '1'; }
+    }
+    window.adjFont = function (dir) {
+      var sz = getSize();
+      var idx = steps.indexOf(sz);
+      if (idx === -1) idx = steps.indexOf(base);
+      setSize(steps[Math.max(0, Math.min(steps.length - 1, idx + dir))]);
+    };
+    setSize(getSize());
+  })();
+</script>
 
 </body>
 </html>
