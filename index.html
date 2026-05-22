@@ -72,6 +72,19 @@
       border-right: 1px solid #D17D59;
     }
   }
+  /* ASCII block art scaled to fit inside the terminal box left panel */
+  .ascii-logo-small {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #D17D59;
+    white-space: pre;
+    line-height: 1.1;
+    font-size: 0.45rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    opacity: 0.9;
+  }
+  @media (min-width: 640px)  { .ascii-logo-small { font-size: 0.55rem; } }
+  @media (min-width: 1024px) { .ascii-logo-small { font-size: 0.65rem; } }
   .card {
     background-color: #2e2e2c;
     border: 1px solid hsl(240 3.7% 15.9%);
@@ -167,9 +180,21 @@
       <h1 class="terminal-box-label">Getting Real with Claude Code</h1>
       <div class="flex flex-col md:flex-row">
 
-        <!-- Left panel: tagline + metadata -->
-        <div class="terminal-panel-left p-6 md:p-10 flex-1 min-w-0">
-          <p class="font-mono leading-relaxed mb-6" style="color: hsl(0 0% 88%); font-size: 1rem;">
+        <!-- Left panel: ASCII logo + tagline + metadata -->
+        <div class="terminal-panel-left p-6 md:p-8 flex-1 min-w-0">
+          <div class="ascii-logo-small mb-5">
+ ██████ ██       █████  ██    ██ ██████  ███████
+██      ██      ██   ██ ██    ██ ██   ██ ██
+██      ██      ███████ ██    ██ ██   ██ █████
+██      ██      ██   ██ ██    ██ ██   ██ ██
+ ██████ ███████ ██   ██  ██████  ██████  ███████
+
+ ██████  ██████  ██████  ███████
+██      ██    ██ ██   ██ ██
+██      ██    ██ ██   ██ █████
+██      ██    ██ ██   ██ ██
+ ██████  ██████  ██████  ███████</div>
+          <p class="font-mono leading-relaxed mb-4" style="color: hsl(0 0% 88%); font-size: 0.9375rem;">
             A 2-hour, coffee-shop-friendly workshop<br>for builders ready to move past the chat box.
           </p>
           <div class="font-mono text-xs" style="color: hsl(0 0% 42%);">
@@ -213,11 +238,11 @@
 
   <!-- ===== Why This Works ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">Why This Works</h2>
-    <p class="text-fg-muted text-sm mb-8">The theory behind the three-file discipline. What Claude Code actually does — and what a chat box structurally cannot.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">Why This Works</h2>
+    <p class="text-fg-muted text-sm mb-8 text-center">The theory behind the three-file discipline. What Claude Code actually does — and what a chat box structurally cannot.</p>
 
     <!-- The loop -->
-    <div class="max-w-3xl mb-10 p-8 rounded-lg" style="background:#2e2e2c;border:1px solid hsl(240 3.7% 15.9%);">
+    <div class="max-w-3xl mx-auto mb-10 p-8 rounded-lg" style="background:#2e2e2c;border:1px solid hsl(240 3.7% 15.9%);">
       <div class="text-xs uppercase tracking-widest font-semibold mb-4" style="color:#D17D59;letter-spacing:0.1em;">The mental model — the loop</div>
       <p class="leading-relaxed" style="color:hsl(0 0% 88%);font-size:0.9375rem;line-height:1.8;">
         Claude Code is an agentic loop. Each turn: Claude reads your context files (<code style="background:rgba(209,125,89,0.12);color:#E8A687;padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8125rem;">CLAUDE.md</code>, <code style="background:rgba(209,125,89,0.12);color:#E8A687;padding:0.1rem 0.35rem;border-radius:3px;font-size:0.8125rem;">PRD.md</code>, files opened so far) → acts through tools → waits for your review. Context is durable on disk and re-read every turn. <strong style="color:hsl(0 0% 98%);">You steer Claude by editing files, not by arguing in chat.</strong> In Plan Mode, the edit and bash tools are disabled at the framework level — Claude physically cannot write anything until you approve a plan you actually read.
@@ -245,7 +270,7 @@
 
     <!-- What a chat box can't do -->
     <div class="mb-8">
-      <div class="text-xs uppercase tracking-widest font-semibold mb-4" style="color:hsl(0 0% 64%);">What a chat box structurally cannot do</div>
+      <div class="text-xs uppercase tracking-widest font-semibold mb-4 text-center" style="color:hsl(0 0% 64%);">What a chat box structurally cannot do</div>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="card" style="padding:1.375rem;">
           <div class="font-mono font-semibold mb-2" style="color:#D17D59;font-size:0.9375rem;">files</div>
@@ -266,13 +291,15 @@
       </div>
     </div>
 
-    <a href="viewer.html?file=resources/how-claude-code-works.md" class="btn btn-primary">Read the full mental model →</a>
+    <div class="text-center mt-8">
+      <a href="viewer.html?file=resources/how-claude-code-works.md" class="btn btn-primary">Read the full mental model →</a>
+    </div>
   </section>
 
   <!-- ===== Getting Started ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">Getting Started</h2>
-    <p class="text-fg-muted text-sm mb-6">Do these before you walk in.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">Getting Started</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">Do these before you walk in.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="card">
@@ -304,8 +331,8 @@
 
   <!-- ===== The 2-Hour Workshop ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">The 2-Hour Workshop</h2>
-    <p class="text-fg-muted text-sm mb-6">Six blocks. Built-in slack for coffee-shop reality.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">The 2-Hour Workshop</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">Six blocks. Built-in slack for coffee-shop reality.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <div class="card">
@@ -352,8 +379,8 @@
 
   <!-- ===== After Workshop ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">After the Workshop — Pick a Track</h2>
-    <p class="text-fg-muted text-sm mb-6">Take the receipts CLI somewhere real. Each track ships in an evening or two.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">After the Workshop — Pick a Track</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">Take the receipts CLI somewhere real. Each track ships in an evening or two.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="card">
@@ -385,8 +412,8 @@
 
   <!-- ===== Resources ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">Reference Materials</h2>
-    <p class="text-fg-muted text-sm mb-6">The artifacts referenced during the build. Bookmark and reuse.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">Reference Materials</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">The artifacts referenced during the build. Bookmark and reuse.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="card">
@@ -430,8 +457,8 @@
 
   <!-- ===== For Facilitators ===== -->
   <section class="mb-16">
-    <h2 class="text-2xl font-semibold mb-1">For Facilitators</h2>
-    <p class="text-fg-muted text-sm mb-6">Running this yourself in your own city? Start here.</p>
+    <h2 class="text-2xl font-semibold mb-1 text-center">For Facilitators</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">Running this yourself in your own city? Start here.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="card">
