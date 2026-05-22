@@ -18,7 +18,7 @@ Three moments are non-negotiable.
 
 **1. After the bad prompt fails (≈ 0:15).**
 
-Don't rescue. Let the room watch Claude produce something that compiles but doesn't match intent. Ask:
+Don't rescue. Let the room watch Claude produce something that compiles (runs without crashing) but doesn't match intent. Ask:
 
 > *"What's wrong here?"*
 
@@ -102,7 +102,7 @@ Order of escalation:
 
 - **00:00:** Soft start matters more than you think. Late arrivals are guaranteed. Use 00:00–00:10 for chitchat plus tool check, not content.
 - **The bad-prompt demo is non-negotiable.** It's the entire emotional hook. Don't shortcut it even if you're running behind.
-- **The eval harness is the central beat.** If you're running short on time, cut Block 5 (track-pick) before cutting Block 4 (verify). The track-pick is nice; the verify block is the workshop's *raison d'être*.
+- **The eval harness is the central beat.** If you're running short on time, cut Block 5 (track-pick) before cutting Block 4 (verify). The track-pick is nice; the verify block is the workshop's core purpose.
 
 ## After the workshop
 

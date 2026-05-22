@@ -18,8 +18,8 @@ See PRD.md for the full spec — read it before planning anything.
 
 ## Stack
 - Python 3.11+
-- Click for the CLI surface
-- SQLite via the stdlib `sqlite3` module (no ORM)
+- Click for the CLI surface (handles command-line arguments and subcommands)
+- SQLite via the stdlib `sqlite3` module (no ORM) — `stdlib` means it's built into Python, no installation needed; ORM = Object-Relational Mapper, a library that wraps database calls in Python objects. We skip it to keep things simple and inspectable.
 - `anthropic` Python SDK for extraction
 - `pytest` for tests
 - `uv` for dependency management
@@ -34,7 +34,7 @@ See PRD.md for the full spec — read it before planning anything.
 - `inbox/`                    — sample receipts shipped with the repo
 
 ## Conventions
-- All public functions get type hints.
+- All public functions get type hints (annotations that tell Claude what type each argument and return value should be — e.g., `def add(path: Path) -> int`).
 - Stdout is for data. Logs go to stderr.
 - Exit code 0 on success, 1 on any failure, 2 on user error (bad flag).
 - Never call Claude inside a test. Tests use recorded fixtures in
@@ -73,7 +73,7 @@ dialect. No timestamps in output.
 ## What's deliberately *not* in this file
 
 - A long intro explaining what Click is, what SQLite is, what pytest is. Claude knows. Save the budget.
-- Style preferences ("use 4 spaces for indentation"). The project's `pyproject.toml` and `ruff` config handle that.
+- Style preferences ("use 4 spaces for indentation"). The project's `pyproject.toml` and `ruff` config handle that — `pyproject.toml` is Python's project configuration file; `ruff` is an automatic code formatter that enforces style so you don't have to.
 - Marketing language ("we are building a delightful experience…"). Doesn't help Claude. Doesn't help you.
 - Anything that should be in the PRD instead.
 
