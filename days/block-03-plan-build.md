@@ -1,0 +1,101 @@
+# Block 3 — Plan, Build
+
+**Time:** 00:40 – 01:25
+**Goal:** Every attendee finishes the block with a working `receipts add` and `receipts list` against the supplied samples. The harness in Block 4 will tell us whether it's right.
+
+## Block shape
+
+This is the longest block of the workshop — 45 minutes — and it is mostly silent. Attendees work on their own laptops. The facilitator circulates, troubleshoots quietly, and resists the urge to over-narrate.
+
+| Time | Activity |
+|---|---|
+| 00:40 – 00:48 | **Facilitator demos Plan Mode live.** Approve a plan together. |
+| 00:48 – 01:20 | **Attendees build.** Run `/prime`, then `/plan`, then `/implement`. |
+| 01:20 – 01:25 | **Pause.** Run `receipts add inbox/` on every laptop. Confirm output. |
+
+## The Plan Mode demo
+
+Read this aloud as you do it, and project the screen if you have one.
+
+> *"Open the repo. Run `claude`. You'll see the prompt. Now press Shift+Tab once — bottom of the terminal now says `accept edits on`. Press Shift+Tab again — it says `plan mode on`. On Windows, if Shift+Tab skips Plan Mode, the slash command `/plan` does the same thing.*
+>
+> *In Plan Mode, Claude physically cannot edit files, run commands, or modify anything. It can only read, search, and ask questions. This is enforced at the tool level, not as a suggestion.*
+>
+> *I'm running `/prime` first. It reads `PRD.md` and `CLAUDE.md` and tells me what it understood. If anything in the readback is wrong, I edit the files — not the prompt.*
+>
+> *Now I'm running `/plan`. The plan comes back as a numbered list of steps with file targets and test gates. I'm reading it line by line. If I see anything wrong, I push back **now** — not after 200 lines of code are wrong.*
+>
+> *I press Ctrl+G to open the plan in my editor. I edit step 3 — let's say I want the migration to run before any extract logic exists, not after. I save. I come back to the terminal.*
+>
+> *I approve the plan. Claude exits Plan Mode and starts executing the steps in order. If anything drifts mid-build, I press Shift+Tab to re-enter Plan Mode and ask for a revised plan."*
+
+The script is short on purpose. The point is the loop — read, edit, approve — not the keystrokes.
+
+## The build — what attendees do
+
+In their own seed repo:
+
+```bash
+claude
+> /prime
+```
+
+Claude reads the project and tells you what it understood. If the readback is off, the PRD or `CLAUDE.md` is wrong — fix the file, not the prompt.
+
+```bash
+> /plan
+```
+
+Plan comes back. Read it. Edit it if needed. Approve.
+
+```bash
+> /implement
+```
+
+Claude executes the plan. Watch the diffs. Don't auto-accept everything blindly — the workshop's discipline is *read the diffs*.
+
+When Claude finishes a step that creates the `ledger` module or the `extract` module, ask it to write a tiny smoke test before moving on. That's the rhythm: small step, small test, next step.
+
+## The first real moment
+
+When attendees reach the point of running:
+
+```bash
+receipts add inbox/
+```
+
+…and seeing ten rows added — not eleven, not nine — that's the first proof the structure worked. Pause for it. Let people look up from their screens.
+
+Then:
+
+```bash
+receipts add inbox/
+```
+
+Run it again. It should add zero rows and report ten duplicates. **The idempotency invariant** is the thing a chat interface fundamentally cannot deliver. Make sure every laptop hits this.
+
+## When someone is stuck
+
+The order of escalation:
+
+1. **"Are you in Plan Mode?"** Look at the terminal footer. 70% of "weird" is "you skipped the plan."
+2. **"Show me your last plan."** Did they approve a plan that contained the bug, or did Claude drift mid-implementation? Different fixes.
+3. **"What does `pytest tests/test_ledger.py` say?"** Get a real error message into the room before guessing.
+4. **"Let's `/rewind` and try the plan again."** Don't be sentimental about code Claude wrote two minutes ago.
+
+If a laptop is well and truly stuck, pair the attendee with a neighbour who's working. Don't take over their keyboard.
+
+## What to call out from the front of the room
+
+Twice during the build, pause for 30 seconds and say one thing aloud:
+
+- **Around 01:00:** *"Notice how short your prompts have become. You're not engineering them anymore. You're nudging."* That's the unlock.
+- **Around 01:15:** *"If Claude is doing the wrong thing right now, the PRD or `CLAUDE.md` is wrong. Don't fight it with prompts. Fix the file."*
+
+## Outputs from this block
+
+- Every laptop runs `receipts add inbox/` to ten new rows.
+- Every laptop runs `receipts add inbox/` a second time to zero new rows and ten duplicates.
+- Every attendee has seen their plan, edited a plan at least once, and watched `/implement` execute it.
+
+[← Back to home](index.html)
