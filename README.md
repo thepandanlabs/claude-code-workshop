@@ -121,7 +121,7 @@ Adding a new resource card to the landing page:
 
 The current version is **v1.0 — Riyadh edition (May 2026)**.
 
-Future revisions should land in a sibling folder (e.g. `revisions/20260601/`) before being merged. 
+Future revisions should land in a sibling folder (e.g. `revisions/20260601/`) before being merged.
 
 ## Design system
 
@@ -145,7 +145,6 @@ Confirms every `viewer.html?file=...` link in `index.html` points to an existing
 
 ## Credits
 
-.
 - **Verification pyramid pedagogy:** Cole Medin's [ai-transformation-workshop](https://github.com/coleam00/ai-transformation-workshop).
 - **Spec-driven scope discipline:** Beck Source's [inventory-management](https://github.com/beck-source/inventory-management).
 - **Eval thinking:** Hamel Husain's posts on `hamel.dev/blog`.

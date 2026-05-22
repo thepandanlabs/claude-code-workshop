@@ -50,7 +50,6 @@ Also worth reading: **Anthropic Cookbook's `misc/building_evals.ipynb`** — cod
 
 ## Reference workshops (the ones this kit was calibrated against)
 
-
 - **coleam00/ai-coding-summit-workshop-2** — `github.com/coleam00/ai-coding-summit-workshop-2`. A 2-hour live build with a poll/survey app.
 - **coleam00/ai-transformation-workshop** — `github.com/coleam00/ai-transformation-workshop`. The PIV (Plan/Implement/Validate) pyramid is worth borrowing.
 - **ssthakuraa/claude-code-workshop** — `github.com/ssthakuraa/claude-code-workshop`. The 4-day enterprise version with Spring Boot + React.
