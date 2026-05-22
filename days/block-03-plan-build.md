@@ -25,7 +25,7 @@ Read this aloud as you do it, and project the screen if you have one.
 >
 > *Now I'm running `/plan`. The plan comes back as a numbered list of steps with file targets and test gates. I'm reading it line by line. If I see anything wrong, I push back **now** — not after 200 lines of code are wrong.*
 >
-> *I press Ctrl+G to open the plan in my editor. I edit step 3 — let's say I want the migration to run before any extract logic exists, not after. I save. I come back to the terminal.*
+> *I press Ctrl+G to open the plan in my editor (a text editor where I can rewrite any step). I edit step 3 — let's say I want the database setup (migration) to run before any data extraction logic exists, not after. I save. I come back to the terminal.*
 >
 > *I approve the plan. Claude exits Plan Mode and starts executing the steps in order. If anything drifts mid-build, I press Shift+Tab to re-enter Plan Mode and ask for a revised plan."*
 
@@ -52,9 +52,9 @@ Plan comes back. Read it. Edit it if needed. Approve.
 > /implement
 ```
 
-Claude executes the plan. Watch the diffs. Don't auto-accept everything blindly — the workshop's discipline is *read the diffs*.
+Claude executes the plan. Watch the diffs — a diff is Claude's change summary: green lines are code being added, red lines are code being removed. Reviewing them is how you check Claude's work before it becomes permanent. Don't skip this. The workshop's discipline is *read the diffs*, not "trust and hope."
 
-When Claude finishes a step that creates the `ledger` module or the `extract` module, ask it to write a tiny smoke test before moving on. That's the rhythm: small step, small test, next step.
+When Claude finishes a step that adds new functionality, ask it to write a quick smoke test before moving on — a smoke test is just a minimal check that the new piece works at all (not a full test, just "does it start and not immediately crash"). That's the rhythm: small step, small check, next step.
 
 ## The first real moment
 
@@ -72,7 +72,19 @@ Then:
 receipts add inbox/
 ```
 
-Run it again. It should add zero rows and report ten duplicates. **The idempotency invariant** is the thing a chat interface fundamentally cannot deliver. Make sure every laptop hits this.
+Run it again. It should add zero rows and report ten duplicates.
+
+**This moment is the point of the workshop.** Take 60 seconds to say it out loud:
+
+> *"Running it twice and getting the same result — no duplicates, no confusion — is called idempotency. It means the operation is safe to repeat. You could run it a hundred times and the ledger stays correct.*
+>
+> *A chat interface cannot do this. It has no memory between sessions. Every time you paste a receipt into Claude.ai, it doesn't know whether it's seen it before. There's no database. There's no deduplication. There's no ledger.*
+>
+> *What you just built has those things. That's the gap between a demo and a tool.*
+>
+> *And you built it in 40 minutes with a PRD, a CLAUDE.md, and a plan."*
+
+Make sure every laptop hits this moment before moving on.
 
 ## When someone is stuck
 
@@ -81,7 +93,7 @@ The order of escalation:
 1. **"Are you in Plan Mode?"** Look at the terminal footer. 70% of "weird" is "you skipped the plan."
 2. **"Show me your last plan."** Did they approve a plan that contained the bug, or did Claude drift mid-implementation? Different fixes.
 3. **"What does `pytest tests/test_ledger.py` say?"** Get a real error message into the room before guessing.
-4. **"Let's `/rewind` and try the plan again."** Don't be sentimental about code Claude wrote two minutes ago.
+4. **"Let's `/rewind` and try the plan again."** `/rewind` undoes Claude's last set of changes — it restores the files to where they were before the last `/implement` run. Don't be sentimental about code Claude wrote two minutes ago.
 
 If a laptop is well and truly stuck, pair the attendee with a neighbour who's working. Don't take over their keyboard.
 
