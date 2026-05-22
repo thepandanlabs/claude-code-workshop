@@ -13,7 +13,7 @@ When Plan Mode is on, Claude **physically cannot edit files, run commands, or mo
 - Ask you questions
 - Produce a written plan
 
-This is enforced at the tool level — it isn't a polite suggestion or a setting that affects token behaviour. The edit and bash tools simply aren't available in this mode.
+This is enforced at the tool level — it isn't a polite suggestion or a mode you can accidentally talk Claude out of. The edit and bash tools simply aren't available in this mode.
 
 ## How to enter Plan Mode
 
@@ -59,7 +59,7 @@ This runs the `.claude/commands/prime.md` slash command, which reads `PRD.md` an
 /plan implement the v0.1 acceptance criteria from PRD.md
 ```
 
-Claude reads, thinks, produces a numbered plan. The plan is saved to `~/.claude/plans/` with a random name like `dreamy-orbiting-quokka.md`. It survives `/clear`, it survives context compaction, you can open it in any text editor.
+Claude reads, thinks, produces a numbered plan. The plan is saved to `~/.claude/plans/` (a folder in your home directory) with a random name like `dreamy-orbiting-quokka.md`. It survives `/clear`, it survives context compaction (what happens when a long session fills up Claude's working memory and older parts get summarised), you can open it in any text editor.
 
 ### 5. Read the plan, line by line
 
@@ -67,10 +67,10 @@ Out loud if you're alone. With a colleague if you're not. The discipline you're 
 
 What you're looking for:
 
-- Are the files in the right order? (Schema before code that uses the schema.)
-- Are there test gates between steps? (Without them, errors compound.)
+- Are the files in the right order? (The database schema — the blueprint that defines what fields a record contains — should be created before the code that reads from it.)
+- Are there test gates between steps? (Without them, errors compound silently.)
 - Is anything missing from the PRD that the plan should have covered?
-- Is anything in the plan that's not in the PRD? (Scope creep — push back.)
+- Is anything in the plan that's not in the PRD? (Scope creep — features that weren't agreed on. Push back before any code gets written.)
 
 ### 6. Edit the plan in place
 
@@ -86,7 +86,7 @@ When the plan is right, exit Plan Mode (Shift+Tab once more to land on `accept e
 Implement the plan.
 ```
 
-Claude executes the steps in order. Watch the diffs. The discipline now is *read the diffs* — don't auto-accept everything blindly.
+Claude executes the steps in order. Watch the diffs (the change summary: green lines are code being added, red lines are code being removed). The discipline now is *read the diffs* — don't auto-accept everything blindly.
 
 ### 8. If it drifts mid-build
 
@@ -112,7 +112,7 @@ You get a new plan. You read it. You approve it. The loop continues.
 - Exploring an unfamiliar codebase with no edits
 
 **Use Auto-Accept (one Shift+Tab) but not full Plan Mode:**
-- Mechanical refactors where the plan is obvious
+- Mechanical refactors (renaming something across every file, reformatting, moving code around) where the plan is obvious
 - After you've already approved a Plan Mode plan and you trust the rest of the execution
 
 The right default for the workshop is **always Plan Mode for the build block**. The point isn't speed today — it's the habit.

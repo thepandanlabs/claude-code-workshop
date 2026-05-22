@@ -21,12 +21,14 @@ Two install paths. Pick one. The native installer is the current recommendation.
 **Native installer (no Node.js needed):**
 
 ```bash
-# macOS / Linux / WSL
+# macOS / Linux / WSL (Windows Subsystem for Linux)
 curl -fsSL https://claude.ai/install.sh | bash
 
 # Windows (PowerShell)
 irm https://claude.ai/install.ps1 | iex
 ```
+
+The `curl` / `irm` commands download and run the installer automatically — same idea as a web-based setup wizard, just in the terminal.
 
 **npm fallback (if you prefer Node.js):**
 
@@ -34,7 +36,9 @@ irm https://claude.ai/install.ps1 | iex
 npm install -g @anthropic-ai/claude-code
 ```
 
-If you hit `EACCES` errors on npm, **do not use `sudo`**. Set up a user-local prefix:
+`npm` is the package manager that comes with Node.js — a way to install command-line tools with one command.
+
+If you hit `EACCES` errors on npm (a permission error meaning "this installer doesn't have write access to the system folder"), **do not use `sudo`**. Set up a user-local prefix instead — this tells npm to install tools into your own home folder where it has permission:
 
 ```bash
 mkdir ~/.npm-global
@@ -62,7 +66,7 @@ The workshop's anchor project is a Python CLI. Check:
 python --version   # or: python3 --version
 ```
 
-If you're below 3.11, install via [python.org](https://www.python.org/downloads/), Homebrew (`brew install python@3.12`), or your distro's package manager.
+If you're below 3.11, install via [python.org](https://www.python.org/downloads/), Homebrew (`brew install python@3.12` — Homebrew is a popular tool installer for macOS), or your operating system's package manager.
 
 ## 4. The seed repo cloned
 
@@ -81,7 +85,7 @@ The repo ships with:
 - `CLAUDE.md` — the codebase conventions.
 - `.claude/commands/` — the four slash commands (`/prime`, `/plan`, `/implement`, `/verify`).
 - `inbox/` — ten sample receipt files for the build.
-- `tests/` — the starter verification harness with golden fixtures.
+- `tests/` — the starter automated test suite, including golden fixtures (saved examples of correct output that every future run is compared against).
 
 ## Also helpful
 
