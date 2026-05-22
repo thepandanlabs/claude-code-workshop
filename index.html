@@ -180,11 +180,9 @@
       <h1 class="terminal-box-label">Getting Real with Claude Code</h1>
       <div class="flex flex-col md:flex-row">
 
-        <!-- Left column: content area + prompt bar stacked so divider covers both -->
-        <div class="terminal-panel-left flex flex-col flex-1 min-w-0">
-
-          <!-- Content: ASCII logo, tagline, metadata, who it's for -->
-          <div class="p-6 md:p-8 flex-1">
+        <!-- Left column: content only — divider stretches to flex row height -->
+        <div class="terminal-panel-left flex-1 min-w-0">
+          <div class="p-6 md:p-8">
             <div class="ascii-logo-small mb-5">
  ██████ ██       █████  ██    ██ ██████  ███████
 ██      ██      ██   ██ ██    ██ ██   ██ ██
@@ -210,16 +208,9 @@
               </p>
             </div>
           </div>
-
-          <!-- Prompt bar inside left column so the divider extends to cover it -->
-          <div class="px-6 py-3 flex items-center gap-2" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
-            <span class="font-mono" style="color: #D17D59; font-size: 0.9rem;">›</span>
-            <span class="font-mono text-xs" style="color: hsl(0 0% 36%);">claude-code-workshop &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; mixed skill &nbsp;·&nbsp; Riyadh 2026</span>
-          </div>
-
         </div>
 
-        <!-- Divider — spans the full left column height (content + prompt bar) -->
+        <!-- Divider — flex child, stretches to full flex-row height -->
         <div class="terminal-divider" aria-hidden="true"></div>
 
         <!-- Right panel: workshop vitals -->
@@ -235,6 +226,11 @@
           </p>
         </div>
 
+      </div>
+      <!-- Full-width prompt bar spanning both columns, centered -->
+      <div class="flex items-center justify-center gap-2 px-6 py-3" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
+        <span class="font-mono" style="color: #D17D59; font-size: 0.9rem;">›</span>
+        <span class="font-mono text-xs" style="color: hsl(0 0% 36%);">claude-code-workshop &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; mixed skill &nbsp;·&nbsp; Riyadh 2026</span>
       </div>
     </div>
   </header>
