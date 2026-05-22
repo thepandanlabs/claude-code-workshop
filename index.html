@@ -180,9 +180,12 @@
       <h1 class="terminal-box-label">Getting Real with Claude Code</h1>
       <div class="flex flex-col md:flex-row">
 
-        <!-- Left panel: ASCII logo + tagline + metadata -->
-        <div class="terminal-panel-left p-6 md:p-8 flex-1 min-w-0">
-          <div class="ascii-logo-small mb-5">
+        <!-- Left column: content area + prompt bar stacked so divider covers both -->
+        <div class="terminal-panel-left flex flex-col flex-1 min-w-0">
+
+          <!-- Content: ASCII logo, tagline, metadata, who it's for -->
+          <div class="p-6 md:p-8 flex-1">
+            <div class="ascii-logo-small mb-5">
  ██████ ██       █████  ██    ██ ██████  ███████
 ██      ██      ██   ██ ██    ██ ██   ██ ██
 ██      ██      ███████ ██    ██ ██   ██ █████
@@ -194,15 +197,29 @@
 ██      ██    ██ ██   ██ █████
 ██      ██    ██ ██   ██ ██
  ██████  ██████  ██████  ███████</div>
-          <p class="font-mono leading-relaxed mb-4" style="color: hsl(0 0% 88%); font-size: 0.9375rem;">
-            A 2-hour, coffee-shop-friendly workshop<br>for builders ready to move past the chat box.
-          </p>
-          <div class="font-mono text-xs" style="color: hsl(0 0% 42%);">
-            <span style="color: #D17D59;">Pandan Labs</span>&nbsp;&nbsp;·&nbsp;&nbsp;v1.0&nbsp;&nbsp;·&nbsp;&nbsp;Riyadh&nbsp;&nbsp;·&nbsp;&nbsp;May 2026
+            <p class="font-mono leading-relaxed mb-4" style="color: hsl(0 0% 88%); font-size: 0.9375rem;">
+              A 2-hour, coffee-shop-friendly workshop<br>for builders ready to move past the chat box.
+            </p>
+            <div class="font-mono text-xs mb-5" style="color: hsl(0 0% 42%);">
+              <span style="color: #D17D59;">Pandan Labs</span>&nbsp;&nbsp;·&nbsp;&nbsp;v1.0&nbsp;&nbsp;·&nbsp;&nbsp;Riyadh&nbsp;&nbsp;·&nbsp;&nbsp;May 2026
+            </div>
+            <div class="pt-4" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
+              <div class="terminal-panel-heading">Who it's for</div>
+              <p class="font-mono text-xs" style="color: hsl(0 0% 60%); line-height: 1.65;">
+                Anyone who wants to build real software with Claude Code. No prior coding experience required — builders, PMs, ex-techies, and curious non-techies all welcome. If you can open a terminal, you're ready.
+              </p>
+            </div>
           </div>
+
+          <!-- Prompt bar inside left column so the divider extends to cover it -->
+          <div class="px-6 py-3 flex items-center gap-2" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
+            <span class="font-mono" style="color: #D17D59; font-size: 0.9rem;">›</span>
+            <span class="font-mono text-xs" style="color: hsl(0 0% 36%);">claude-code-workshop &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; mixed skill &nbsp;·&nbsp; Riyadh 2026</span>
+          </div>
+
         </div>
 
-        <!-- Vertical divider: full-height solid line, desktop only -->
+        <!-- Divider — spans the full left column height (content + prompt bar) -->
         <div class="terminal-divider" aria-hidden="true"></div>
 
         <!-- Right panel: workshop vitals -->
@@ -218,11 +235,6 @@
           </p>
         </div>
 
-      </div>
-      <!-- Terminal prompt bar -->
-      <div class="px-6 py-3 flex items-center gap-2" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
-        <span class="font-mono" style="color: #D17D59; font-size: 0.9rem;">›</span>
-        <span class="font-mono text-xs" style="color: hsl(0 0% 36%);">claude-code-workshop &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; mixed skill &nbsp;·&nbsp; Riyadh 2026</span>
       </div>
     </div>
   </header>
