@@ -5,7 +5,9 @@
 
 ## Why this block exists
 
-A chat-tab user shows you something that "works" by running it once. A builder shows you something that works by running a test suite. The difference between the two is the difference between "looks right" and "is right" — and it's the difference between Claude Code as a toy and Claude Code as production tooling.
+A chat-tab user shows you something that "works" by running it once. A builder shows you something that works by running a test suite. The difference between the two is the difference between "looks right" and "is right."
+
+For a business: a demo that worked once is not a guarantee. A new hire changes one line of code — you don't know what broke. A model update changes Claude's output format — you don't know until a client complains. The eval suite is your early warning system: it runs after every change and tells you immediately whether anything broke. **That's what this block builds.**
 
 This block is 15 minutes, not 5. Don't shortcut it.
 
@@ -28,9 +30,9 @@ pytest tests/ -v
 
 What's in `tests/`:
 
-- `test_ledger.py` — asserts that adding the ten samples twice produces exactly ten rows.
-- `test_report.py` — asserts that `receipts report --month 2026-05 --format csv` matches `tests/golden/may.csv` **byte for byte**.
-- `test_schema.py` — asserts the extracted JSON validates against the Pydantic schema in `extract.py`.
+- `test_ledger.py` — checks that adding the ten sample receipts twice produces exactly ten rows (not twenty).
+- `test_report.py` — checks that `receipts report --month 2026-05 --format csv` matches `tests/golden/may.csv` character for character.
+- `test_schema.py` — checks that each extracted receipt contains all required fields in the right format (date as YYYY-MM-DD, amount as a positive number, currency as a 3-letter code, etc.).
 
 At least one will fail on the first run. That's by design — the seed `golden/may.csv` is intentionally one row short of what the ten samples should produce. The test exists to fail the first time.
 
@@ -76,11 +78,11 @@ Green. Hold the moment. This is the entire workshop in 30 seconds: structured in
 
 ## The three layers of verification (talk through, 3 minutes)
 
-**Layer 1 — Deterministic golden tests.** The CSV is byte-identical or it isn't. No human judgment. These tests don't call Claude — they call your CLI, which reads recorded fixtures from `tests/fixtures/extractions/*.json`. The Claude API is mocked out in `conftest.py`.
+**Layer 1 — Deterministic golden tests.** The CSV matches the golden file or it doesn't. No human judgment. These tests never call Claude or the internet — they use pre-recorded responses stored in `tests/fixtures/`. A setup file called `conftest.py` swaps the real Claude API for these recordings before any test runs, so tests are fast, free, and produce the same result every time.
 
-**Layer 2 — Schema validation.** Every extraction round-trips through a Pydantic model. If Claude returns malformed JSON or invents a category, the schema rejects it. Fast feedback, no LLM-as-judge needed.
+**Layer 2 — Schema validation.** Every receipt extraction passes through a strict format check. If Claude returns a negative price, a date in the wrong format, or a spending category that isn't in the approved list, the check rejects it before it touches the database — like a strict receptionist who won't file a form with missing or invalid fields, regardless of how confidently it was submitted.
 
-**Layer 3 — Optional LLM-as-judge.** A 30-line script that asks a separate Claude call: *"Given this receipt, is the assigned category correct? Answer PASS or FAIL."* Binary, not 1–5. Hamel Husain's guidance is clear: binary scoring is reliable, scales aren't. We don't run this in the workshop — but the file is in the repo as a starting point for anyone who wants to add it.
+**Layer 3 — Optional LLM-as-judge.** A 30-line script that asks a separate Claude call: *"Given this receipt, is the assigned category correct? Answer PASS or FAIL."* Binary, not a 1–5 scale. Hamel Husain — one of the leading practitioners of LLM evaluation, and the source of the eval thinking in this workshop — is direct: binary scoring is reliable, scales produce noise. We don't run this in the workshop — but the file is in the repo as a starting point for anyone who wants to add it.
 
 ## What to call out from the front of the room
 
