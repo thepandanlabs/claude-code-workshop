@@ -2,12 +2,13 @@
 
 A 2-hour, coffee-shop-friendly Claude Code workshop for builders ready to move past the chat box.
 
-**Live site:** `https://thepandanlabs.github.io/claude-code-workshop/`
-**Audience:** Mixed-skill (ex-techies, PMs, BDMs, some developers). Workshop run in English.
-**Anchor project:** `receipts` — a Python CLI that extracts structured data from a folder of receipt files, maintains a SQLite ledger, and emits deterministic CSV reports.
-**Pedagogy:** structured intent (PRD + `CLAUDE.md` + Plan Mode) plus a small verification harness, demonstrated by experience rather than asserted.
-
-From Pandan Labs with ♥.
+| | |
+|---|---|
+| **Live site** | https://thepandanlabs.github.io/claude-code-workshop/ |
+| **Audience** | Mixed-skill — ex-techies, PMs, BDMs, some developers. Workshop run in English. |
+| **Anchor project** | `receipts` — a Python CLI that extracts structured data from receipt files, maintains a SQLite ledger, and emits deterministic CSV reports. |
+| **Pedagogy** | Structured intent (PRD + `CLAUDE.md` + Plan Mode) plus a small verification harness, demonstrated by experience rather than asserted. |
+| **Run by** | Pandan Labs — Riyadh |
 
 ## Running locally
 
