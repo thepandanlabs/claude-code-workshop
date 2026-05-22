@@ -35,17 +35,42 @@
 </script>
 <style>
   body { background-color: #262624; color: hsl(0 0% 98%); }
-  .ascii-logo {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* Terminal hero box — mirrors the Claude Code welcome panel aesthetic */
+  .terminal-box {
+    border: 1px solid #D17D59;
+    border-radius: 0.25rem;
+    position: relative;
+    margin-top: 1.25rem;
+  }
+  .terminal-box-label {
+    position: absolute;
+    top: -0.65em;
+    left: 1rem;
+    background: #262624;
+    padding: 0 0.5rem;
     color: #D17D59;
-    white-space: pre;
-    line-height: 1;
-    font-size: 0.9rem;
-    font-weight: bold;
-    letter-spacing: 0.05em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .terminal-panel-heading {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #D17D59;
+    margin-bottom: 0.5rem;
+  }
+  /* Left panel border: bottom on mobile, right on md+ */
+  .terminal-panel-left {
+    border-bottom: 1px solid #D17D59;
   }
   @media (min-width: 768px) {
-    .ascii-logo { font-size: 1.1rem; }
+    .terminal-panel-left {
+      border-bottom: none;
+      border-right: 1px solid #D17D59;
+    }
   }
   .card {
     background-color: #2e2e2c;
@@ -137,26 +162,40 @@
 <div class="max-w-6xl mx-auto px-6 py-12 md:py-16">
 
   <!-- ===== Hero ===== -->
-  <header class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-16">
-    <div>
-      <div class="ascii-logo mb-3">
- ██████ ██       █████  ██    ██ ██████  ███████
-██      ██      ██   ██ ██    ██ ██   ██ ██
-██      ██      ███████ ██    ██ ██   ██ █████
-██      ██      ██   ██ ██    ██ ██   ██ ██
- ██████ ███████ ██   ██  ██████  ██████  ███████
+  <header class="mb-16">
+    <div class="terminal-box">
+      <h1 class="terminal-box-label">Getting Real with Claude Code</h1>
+      <div class="flex flex-col md:flex-row">
 
- ██████  ██████  ██████  ███████
-██      ██    ██ ██   ██ ██
-██      ██    ██ ██   ██ █████
-██      ██    ██ ██   ██ ██
- ██████  ██████  ██████  ███████</div>
-      <h1 class="text-2xl md:text-3xl font-semibold mt-6 mb-2">Getting Real with Claude Code</h1>
-      <p class="text-fg-muted text-sm">A 2-hour workshop for builders ready to move past the chat box.</p>
-    </div>
-    <div class="text-right text-sm text-fg-muted shrink-0">
-      <div>2-Hour Workshop · Riyadh</div>
-      <div class="mt-1">Pandan Labs · 2026</div>
+        <!-- Left panel: tagline + metadata -->
+        <div class="terminal-panel-left p-6 md:p-10 flex-1 min-w-0">
+          <p class="font-mono leading-relaxed mb-6" style="color: hsl(0 0% 88%); font-size: 1rem;">
+            A 2-hour, coffee-shop-friendly workshop<br>for builders ready to move past the chat box.
+          </p>
+          <div class="font-mono text-xs" style="color: hsl(0 0% 42%);">
+            <span style="color: #D17D59;">Pandan Labs</span>&nbsp;&nbsp;·&nbsp;&nbsp;v1.0&nbsp;&nbsp;·&nbsp;&nbsp;Riyadh&nbsp;&nbsp;·&nbsp;&nbsp;May 2026
+          </div>
+        </div>
+
+        <!-- Right panel: workshop vitals -->
+        <div class="p-6 md:p-8 md:w-80 shrink-0">
+          <div class="terminal-panel-heading">What you'll build</div>
+          <p class="font-mono text-sm mb-5" style="color: hsl(0 0% 60%); line-height: 1.65;">
+            <span style="color: hsl(0 0% 88%);">receipts</span> — a Python CLI that extracts structured data from receipts, maintains a SQLite ledger, emits deterministic CSV reports.
+          </p>
+          <div class="mb-4" style="border-top: 1px solid hsl(240 3.7% 15.9%);"></div>
+          <div class="terminal-panel-heading">What to bring</div>
+          <p class="font-mono text-sm" style="color: hsl(0 0% 60%); line-height: 1.65;">
+            Claude Pro · Python 3.11+ · a laptop that runs terminal commands
+          </p>
+        </div>
+
+      </div>
+      <!-- Terminal prompt bar -->
+      <div class="px-6 py-3 flex items-center gap-2" style="border-top: 1px solid hsl(240 3.7% 15.9%);">
+        <span class="font-mono" style="color: #D17D59; font-size: 0.9rem;">›</span>
+        <span class="font-mono text-xs" style="color: hsl(0 0% 36%);">claude-code-workshop &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; mixed skill &nbsp;·&nbsp; Riyadh 2026</span>
+      </div>
     </div>
   </header>
 
