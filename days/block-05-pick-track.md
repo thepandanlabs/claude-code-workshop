@@ -5,14 +5,14 @@
 
 ## The four tracks
 
-Each one extends the same `receipts` CLI. Mobile is excluded. Pick by appetite, not by job title — PMs can do the agent track, developers can do the web app.
+Each one extends the same `receipts` CLI. Mobile is excluded. Pick by what you'd actually use — PMs and BDMs often find Track C or D the most interesting to demo; developers reach for Track B; anyone unsure should start with Track A.
 
-| Track | One-liner | Time at home |
-|---|---|---|
-| **A — Polished CLI** | Ship `receipts` to PyPI with rich tables, dry-run, shell completion. | An evening. |
-| **B — Web App** | Wrap the CLI in a FastAPI + Next.js UI. Upload, browse, export. | A weekend. |
-| **C — Agent** | Watch `inbox/`, auto-process high-confidence, escalate the rest. Claude Agent SDK. | A weekend. |
-| **D — MCP Server** | Expose the engine as MCP tools. Talk to it from Claude Desktop. | An evening. |
+| Track | What it is | What it unlocks | Time at home |
+|---|---|---|---|
+| **A — Polished CLI** | Polish the tool and publish it so anyone can install it with one command (no Python setup needed). | Share with teammates without any IT headache. The most contained track. | An evening. |
+| **B — Web App** | Add a browser-based interface — upload receipts, browse the ledger, download CSV. | Non-technical teammates can use the tool without ever opening a terminal. | A weekend. |
+| **C — Agent** | The tool watches a folder and processes receipts automatically as they arrive, 24/7. | Set it up once, it runs itself. No manual `receipts add` needed. | A weekend. |
+| **D — MCP Server** | Plug the tool into Claude Desktop or any AI-powered editor as a built-in capability. | Ask Claude directly: *"What did I spend on dining in May?"* — it queries your ledger and answers. | An evening. |
 
 Full briefs are in the [extension tracks section](index.html#tracks) on the home page. Each track has a starting prompt to paste into Claude Code — it's the only thing you need.
 
@@ -41,7 +41,7 @@ Stop there. Don't approve. Don't implement. The plan itself is the takeaway — 
 ## Common questions in this block
 
 - **"Can I pick two?"** Pick one for this week. Add a second next week.
-- **"What if I want to build something else entirely?"** Same loop. PRD → `CLAUDE.md` → `/plan` → `/implement` → `pytest`. The receipts CLI was the worked example, not the limit.
+- **"What if I want to build something else entirely?"** Same loop. Write a PRD for your idea, create a `CLAUDE.md` for your preferences, run `/plan`, run `/implement`, run your tests. The receipts tool was the worked example, not the limit.
 - **"Which track is best?"** Not a meaningful question. Best is the one you'll finish.
 
 ## Facilitator note — read the room
