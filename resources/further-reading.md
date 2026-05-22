@@ -44,7 +44,7 @@ Also worth reading: **Anthropic Cookbook's `misc/building_evals.ipynb`** — cod
 
 ## Community deep-dives worth your time
 
-- **"A Complete Guide to Claude Code — Here are ALL the Best Strategies"** by Cole Medin. YouTube, August 2025, ~50 minutes. Slash commands, MCP, PRP framework, subagents, hooks. The best single overview if you're past the first project.
+- **"A Complete Guide to Claude Code — Here are ALL the Best Strategies"** by Cole Medin. YouTube, August 2025, ~50 minutes. Slash commands, MCP, PRP framework (Plan-Review-Prompt: a structured prompting workflow), subagents, hooks. The best single overview if you're past the first project.
 - **Forrest Chang's "andrej-karpathy-skills" CLAUDE.md template** — `github.com/forrestchang/andrej-karpathy-skills`. Inspired by an Andrej Karpathy X post; ~70 lines. A useful comparison template.
 - **The Claude Code Handbook** — freeCodeCamp. Comprehensive intro, free.
 

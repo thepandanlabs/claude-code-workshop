@@ -2,9 +2,11 @@
 
 **Goal:** Take `receipts` from "works on my laptop" to "I'd put this on PyPI." An evening of work.
 
+*(PyPI — the Python Package Index — is the public registry where Python tools are published, like an app store for Python libraries. Publishing there means anyone can install your tool with `pip install receipts` or `uv tool install receipts`.)*
+
 ## What changes
 
-Add a `rich`-formatted output mode, a `--dry-run` flag, proper structured logging, shell completion for bash and zsh, and packaging metadata so `uv build` produces a wheel you could actually publish.
+Add a `rich`-formatted output mode (coloured, tabular terminal output), a `--dry-run` flag, proper structured logging, shell completion for bash and zsh (tab-completion that knows your command's flags), and packaging metadata so `uv build` produces a wheel you could actually publish. A wheel is Python's self-contained installable package format — like a `.dmg` for macOS, but for Python tools.
 
 ## Starting prompt
 
@@ -54,7 +56,7 @@ Plan first. Do not write code yet.
 
 ## Things to watch for
 
-- **The dual-mode output.** This is where most polish attempts fail — they make the tables pretty and break the pipe-to-CSV behaviour. Use `sys.stdout.isatty()` to decide.
+- **The dual-mode output.** This is where most polish attempts fail — they make the tables pretty and break the pipe-to-CSV behaviour. Use `sys.stdout.isatty()` to decide. (`isatty()` means "is this output going to an interactive terminal?" — if yes, render the table; if no, it's being piped to another tool, so produce plain CSV.)
 - **Shell completion installation.** Click can generate completion scripts but the user still has to source them. Document this in the README, don't try to auto-install.
 - **Don't add features the PRD doesn't have.** A polished CLI is the same CLI with better UX, not a different CLI.
 

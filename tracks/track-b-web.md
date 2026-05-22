@@ -4,7 +4,7 @@
 
 ## What changes
 
-The CLI remains the source of truth. The web layer is a thin FastAPI backend that imports the same `ledger.py` and `extract.py` modules, plus a Next.js 16 frontend in Tailwind and shadcn/ui. No new business logic — if you find yourself duplicating extraction logic on the frontend, stop.
+The CLI remains the source of truth. The web layer is a thin FastAPI backend (a Python library for building web APIs — it receives browser requests and talks to your existing code) that imports the same `ledger.py` and `extract.py` modules, plus a Next.js 16 frontend in Tailwind and shadcn/ui (Next.js is a JavaScript framework for building browser-facing pages; shadcn/ui is a ready-made component library for buttons, tables, forms, etc.). No new business logic — if you find yourself duplicating extraction logic on the frontend, stop.
 
 ## Starting prompt
 
@@ -65,7 +65,7 @@ Plan first. Do not write code yet.
 
 ## Simpler alternative
 
-If you don't want a separate frontend deploy: **FastAPI + Jinja2 + HTMX**. One Python process, server-rendered pages, no JS build step. Same prompt, swap the stack section:
+If you don't want a separate frontend deploy: **FastAPI + Jinja2 + HTMX**. One Python process, server-rendered pages (the server builds the HTML and sends it, rather than sending JavaScript that builds the page in the browser), no JS build step. HTMX is a small library that adds interactivity (dynamic updates, file upload progress) without requiring a full JavaScript framework. Same prompt, swap the stack section:
 
 ```text
 Stack:
@@ -81,7 +81,7 @@ This is the lower-effort version. Equally valid. Pick based on which you'll actu
 
 - **Don't reimplement extraction in the API layer.** Import `extract_receipt` from `src/receipts/extract.py`. If you find yourself copy-pasting prompt strings into a FastAPI handler, stop and refactor.
 - **File uploads in dev.** FastAPI handles multipart cleanly with `UploadFile`. The temp inbox needs to live somewhere persistent — don't use `tempfile.NamedTemporaryFile` if you want the file's hash to be reproducible across restarts.
-- **CORS.** During development with Next.js on `:3000` and FastAPI on `:8000` you need permissive CORS in FastAPI. Don't ship that to production without tightening.
+- **CORS.** During development with Next.js on `:3000` and FastAPI on `:8000` you need permissive CORS in FastAPI. CORS (Cross-Origin Resource Sharing) is a browser security rule that blocks a page on one address from calling an API on a different address — FastAPI needs explicit permission to allow it. Don't ship a wide-open CORS setting to production.
 
 ## Read next
 

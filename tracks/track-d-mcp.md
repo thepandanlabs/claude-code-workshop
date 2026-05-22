@@ -2,9 +2,11 @@
 
 **Goal:** Expose the receipts engine as a Model Context Protocol server. Any MCP-aware client — Claude Desktop, Cursor, Windsurf, your own agent — can now call your tools. An evening of work.
 
+*(MCP — Model Context Protocol — is an open standard that lets AI assistants call external tools. Once you wrap your receipts tool as an MCP server, Claude Desktop can query your ledger directly: "What did I spend on dining in May?" becomes a real database lookup, not a guess.)*
+
 ## What changes
 
-A thin TypeScript wrapper around the existing Python CLI. Three tools, one resource, one prompt template. Stdio transport for local Claude Desktop integration.
+A thin TypeScript wrapper around the existing Python CLI. Three tools, one resource, one prompt template. Stdio transport for local Claude Desktop integration — stdio (standard input/output) means the MCP server communicates through the same text channels a terminal uses: simple, local, no network port needed.
 
 The CLI stays the canonical engine. The MCP server is a translation layer between the protocol and `subprocess.run(["receipts", ...])`.
 
@@ -72,7 +74,7 @@ Plan first. Do not write code yet.
 
 - **MCP TypeScript SDK** — `@modelcontextprotocol/sdk` v1.29.x is the current stable. Per the SDK README: *"We anticipate a stable v2 release in Q1 2026. Until then, v1.x remains the recommended version for production use."* That Q1 target slipped — v2 API docs are live at `ts.sdk.modelcontextprotocol.io/v2/` but v2 hasn't shipped as a stable npm release. **Use v1.**
 - **Transport.** Stdio for local use (Claude Desktop), Streamable HTTP (introduced in MCP spec 2025-03-26) for remote deployment. The old HTTP+SSE transport was deprecated on the same date — don't use it for new servers.
-- **Zod for validation.** Tool inputs go through Zod schemas before reaching your handler. This is the equivalent of the Pydantic discipline from the main project.
+- **Zod for validation.** Tool inputs go through Zod schemas before reaching your handler. Zod is TypeScript's equivalent of Pydantic — it validates that incoming data matches the expected shape before your code touches it. Same discipline, different language.
 
 ## Why shell out to the Python CLI instead of porting it
 
@@ -84,7 +86,7 @@ When does porting make sense? When the MCP server is on a different machine than
 
 - **Stdio is stdout-sensitive.** Anything written to stdout by your Python CLI will confuse the MCP client. Make sure the CLI writes logs to stderr (it already does, per the seed `CLAUDE.md`'s conventions) and only data to stdout.
 - **Path handling.** Tool inputs from MCP clients are strings. You must validate paths exist before passing them to the CLI — and validate they're inside an allowed directory unless you want the model to read arbitrary paths.
-- **Cold-start latency.** Spawning Python for every tool call is slow (~200ms per call on a modern laptop). For an evening project this is fine. If it becomes a problem, look at having the Python CLI run as a long-lived process and the TypeScript layer talk to it over a Unix socket.
+- **Cold-start latency.** Spawning Python for every tool call is slow (~200ms per call on a modern laptop) — "cold-start" means the time it takes to launch a process from scratch versus one that's already running. For an evening project this is fine. If it becomes a problem, look at having the Python CLI run as a long-lived process and the TypeScript layer talk to it over a Unix socket.
 
 ## Read next
 

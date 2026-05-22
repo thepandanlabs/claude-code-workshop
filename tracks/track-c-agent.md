@@ -4,7 +4,7 @@
 
 ## What changes
 
-The CLI keeps doing what it does. The agent is a separate process — built with the Claude Agent SDK — that polls a folder, calls into the existing `extract` and `ledger` modules, and uses the SDK's elicitation feature to ask the human when it's uncertain.
+The CLI keeps doing what it does. The agent is a separate process — built with the Claude Agent SDK — that polls a folder (checks it every 30 seconds for new files), calls into the existing `extract` and `ledger` modules, and uses the SDK's elicitation feature (a built-in way to pause and ask the human a question mid-loop) to ask the user when it's uncertain about a categorisation.
 
 ## Starting prompt
 
@@ -34,10 +34,13 @@ Model routing:
 Constraints:
 - Reuse the existing extract and ledger modules — do not reimplement.
 - Add new tests under tests/agent/ that don't require a running daemon.
-- Log every decision to ~/.receipts-agent/log.jsonl with timestamps.
+- Log every decision to ~/.receipts-agent/log.jsonl with timestamps. (JSONL = JSON Lines: one JSON record per line, easy to read or process programmatically.)
 - Document how to run as a launchd (macOS) or systemd (Linux) service
-  in agent/README.md. Don't write the service files themselves —
-  just the documentation.
+  in agent/README.md. launchd and systemd are the built-in tools that
+  start programs automatically when your machine boots and restart them
+  if they crash — a daemon (long-running background process) registered
+  here keeps running even when no terminal is open. Don't write the
+  service files themselves — just the documentation.
 
 Plan first. Do not write code yet.
 ```
