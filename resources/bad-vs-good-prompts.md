@@ -16,12 +16,12 @@ build me a receipts tool
 
 - Infer a stack on its own. Often Python. Sometimes Node. Coin flip.
 - Pick a name for the database. Probably `receipts.db`. Maybe `data.db`.
-- Make up a schema. It'll be plausible — date, vendor, amount — but it won't match anything you'd actually use downstream.
-- Drop everything in one Python file with no separation of concerns.
+- Make up a schema (the blueprint defining what fields a record contains). It'll be plausible — date, vendor, amount — but it won't match anything you'd actually use downstream.
+- Drop everything in one Python file with no separation of concerns (meaning no organisation — all the database code, the Claude API code, and the command-line code tangled together in one place).
 - Write no tests.
-- Skip idempotency entirely because you didn't ask for it.
+- Skip idempotency entirely because you didn't ask for it. (Idempotency means "safe to run twice" — without it, processing the same receipt folder twice doubles every entry in the ledger.)
 
-The output will compile. It might even work on one receipt. It will not be the thing you wanted, and **you cannot tell why because you never said what you wanted**.
+The output will compile (run without immediately crashing). It might even work on one receipt. It will not be the thing you wanted, and **you cannot tell why because you never said what you wanted**.
 
 This is what most people who only use Claude in a chat tab think Claude Code is. It's not. They're just driving with no road.
 
@@ -53,6 +53,8 @@ each step to verify. Stop after the plan and wait for my approval.
   8. Implement `cli.py` `list` subcommand.
   9. Run full `pytest tests/`. Confirm green.
 - Stop. Wait for your approval.
+
+*(The individual steps look technical — that's the point. The plan is Claude's detailed breakdown of what it intends to do. You don't need to understand every line to review it; you need to spot anything that's missing, in the wrong order, or wasn't in the PRD.)*
 
 Nothing is written to disk yet. You have a plan you can read, edit, and approve before any cost is incurred.
 

@@ -24,7 +24,7 @@ flowchart TD
 
 ## Layer 1 — Deterministic golden tests
 
-These tests do not call Claude. They call your CLI, which reads recorded fixtures from `tests/fixtures/extractions/*.json`. The Claude API is mocked out in `conftest.py`.
+These tests do not call Claude. They call your CLI, which reads pre-recorded fixtures from `tests/fixtures/extractions/*.json` (JSON files are a common format for storing structured data — think a spreadsheet row saved as plain text). The Claude API is mocked out in `conftest.py` — "mocked out" means replaced with a stand-in that returns the same pre-recorded answers every time, so tests are free, instant, and produce identical results regardless of what the real model would say today.
 
 ```python
 # tests/test_report.py
@@ -61,7 +61,7 @@ This is the "code-based grading" pattern from Anthropic's evals cookbook: *"This
 
 ## Layer 2 — Schema validation
 
-Every extraction round-trips through a Pydantic model. If Claude returns malformed JSON or invents a category, the schema rejects it before anything reaches the ledger.
+Every extraction passes through a Pydantic model — Pydantic is a Python library that acts like a strict form validator: it checks that every field is present, in the right format, and within allowed values. If Claude returns malformed data (a date written the wrong way, a negative price, a made-up category), the validator rejects it before anything reaches the ledger.
 
 ```python
 # src/receipts/extract.py
@@ -82,7 +82,7 @@ class Extraction(BaseModel):
 
 def extract_receipt(path: Path) -> Extraction:
     raw = call_claude(path)                    # returns dict
-    return Extraction.model_validate(raw)      # raises on schema drift
+    return Extraction.model_validate(raw)      # raises on schema drift (i.e. if the model's output format changes)
 ```
 
 Fast feedback, no human judgment required. If a new model release returns slightly different JSON, this layer catches it on the first run.
@@ -163,7 +163,7 @@ The rhythm:
 
 1. **Implement** the next step from the plan.
 2. **Run** `pytest tests/`.
-3. **If red:** paste the failure verbatim into Claude (do not paraphrase, do not summarise). Let Claude diagnose.
+3. **If red:** paste the failure verbatim into Claude (do not paraphrase, do not summarise). The failure message — called a traceback — shows exactly which line of code failed and why. Claude reads it the same way a mechanic reads an error code. Let Claude diagnose.
 4. **If green:** commit. Move to the next step.
 
 The first time a test fails and Claude fixes it from a pasted traceback, the room understands the workshop. That's Block 4.
