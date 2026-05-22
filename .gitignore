@@ -1,0 +1,34 @@
+# Workshop source / brainstorm — not part of the published site
+Claude code workshop for beginners.md
+
+# Claude Code project files — local context only
+CLAUDE.md
+.claude/
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+.env
+.venv/
+venv/
