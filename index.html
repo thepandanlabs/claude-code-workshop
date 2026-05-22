@@ -53,6 +53,8 @@
     border-radius: 0.5rem;
     padding: 1.5rem;
     transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
   }
   .card:hover {
     background-color: #363633;
@@ -66,6 +68,8 @@
     border-radius: 0.5rem;
     padding: 1.5rem;
     transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
   }
   .card-accent:hover {
     background-color: #B8674A;
@@ -115,6 +119,8 @@
     transform: translateY(-1px);
     margin: 0 0.125rem;
   }
+  /* Push buttons to card bottom across all grid rows */
+  .card > a.btn, .card-accent > a.btn { margin-top: auto; }
   /* Card body typography — readable at all viewport widths */
   .card p, .card-accent p {
     font-size: 0.9125rem;
