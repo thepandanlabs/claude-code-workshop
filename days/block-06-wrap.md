@@ -52,12 +52,12 @@ These three things, together, are about 90 minutes of reading and watching. That
 
 Take any question that didn't fit earlier. Some that will land here:
 
-- **"What about Cursor / Windsurf / Aider?"** Same workflow, different chrome. The discipline is the same.
+- **"What about Cursor / Windsurf / Aider?"** These are other AI-assisted code editors made by different teams. Same workflow — PRD, plan, implement, verify — different interface. The discipline transfers directly.
 - **"How do I convince my team?"** Show them the test going green. Don't argue.
-- **"What models do I use for what?"** Sonnet for the build, Opus for the planning of anything ambitious, Haiku for cheap and fast. Switch with `/model`.
-- **"How much will this cost me in API calls?"** Pro covers it for projects this size. The 5-hour rolling window is the real constraint, not dollars.
+- **"What models do I use for what?"** Claude comes in three sizes — Sonnet (fast, everyday work), Opus (slower, better at complex planning), Haiku (fastest and cheapest, good for simple tasks). Sonnet for the build, Opus for planning anything ambitious, Haiku for quick lookups. Switch mid-session with `/model`.
+- **"How much will this cost me in API calls?"** Claude Pro ($20/month) covers projects this size comfortably. The real limit is usage time: Claude Code gives you a rolling 5-hour window of active use before it asks you to pause — not a dollar limit, just a rate-limit to prevent runaway sessions.
 
-If a question is too big — *"how do I build my company's internal RAG?"* — defer to follow-up. *"That's a different workshop. Come to the next one."*
+If a question is too big — *"how do I build my company's internal knowledge search?"* — defer to follow-up. *"That's a different workshop. Come to the next one."*
 
 ## The send-off
 
