@@ -152,25 +152,22 @@
     transition: color 0.15s ease;
   }
   .back-link:hover { color: #E8A687; }
-  /* Sidebar layout */
-  .layout-grid {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    min-height: calc(100vh - 53px);
-  }
-  @media (max-width: 767px) {
-    .layout-grid { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-  }
+  /* Sidebar — fixed overlay, only when viewport has room beside centered content */
   .sidebar {
-    position: sticky;
+    position: fixed;
+    left: 0;
     top: 53px;
+    width: 200px;
     height: calc(100vh - 53px);
     overflow-y: auto;
-    padding: 2rem 1.25rem 2rem 1.5rem;
+    padding: 2rem 1rem 2rem 1.5rem;
     border-right: 1px solid hsl(240 3.7% 15.9%);
     scrollbar-width: thin;
     scrollbar-color: hsl(240 3.7% 20%) transparent;
+    display: none;
+  }
+  @media (min-width: 1280px) {
+    .sidebar { display: block; }
   }
   .toc-label {
     font-size: 0.6875rem;
@@ -195,14 +192,6 @@
   #toc a:hover { color: hsl(0 0% 88%); }
   #toc a.toc-active { color: #D17D59; border-left-color: #D17D59; }
   #toc a.toc-h3 { padding-left: 1.375rem; margin-left: -0.625rem; font-size: 0.775rem; }
-  .content-area {
-    padding: 3rem 3rem 3rem 3.5rem;
-    min-width: 0;
-    max-width: 860px;
-  }
-  @media (max-width: 767px) {
-    .content-area { padding: 2rem 1.25rem; }
-  }
 </style>
 </head>
 <body>
@@ -217,23 +206,19 @@
   </div>
 </div>
 
-<div class="layout-grid">
-  <aside class="sidebar" id="sidebar">
-    <div class="toc-label">On This Page</div>
-    <nav id="toc"></nav>
-  </aside>
+<aside class="sidebar" id="sidebar">
+  <div class="toc-label">On This Page</div>
+  <nav id="toc"></nav>
+</aside>
 
-  <main>
-    <div class="content-area">
-      <article id="content" class="prose-doc">
-        <p style="color: hsl(0 0% 64%);">Loading…</p>
-      </article>
-      <footer class="mt-16 pt-8 border-t text-center text-sm" style="border-color: hsl(240 3.7% 15.9%); color: hsl(0 0% 64%);">
-        From Pandan Labs with <span class="heart" aria-label="love" title="love">♥</span>
-      </footer>
-    </div>
-  </main>
-</div>
+<main class="max-w-4xl mx-auto px-6 py-12">
+  <article id="content" class="prose-doc">
+    <p style="color: hsl(0 0% 64%);">Loading…</p>
+  </article>
+  <footer class="mt-16 pt-8 border-t text-center text-sm" style="border-color: hsl(240 3.7% 15.9%); color: hsl(0 0% 64%);">
+    From Pandan Labs with <span class="heart" aria-label="love" title="love">♥</span>
+  </footer>
+</main>
 
 <script>
   // Parse ?file= query param
