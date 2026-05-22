@@ -3,13 +3,15 @@
 **Time:** 00:00 – 00:20
 **Goal:** Everyone has a working tool, knows the workshop's three claims, and has watched the bad-vs-good prompt demo land.
 
+> **Not familiar with the jargon?** Check the [Glossary](viewer.html?file=resources/glossary.md) — plain-language definitions for every term used in this workshop, written for non-techies.
+
 ## What happens in this block
 
 1. **00:00 – 00:05 — Soft start.** People settle in, order coffee, find power. No content. Late arrivals join.
 2. **00:05 – 00:10 — Tool check.** Each attendee runs `claude --version` and `claude doctor`. The facilitator walks the room. Anyone broken gets paired with a working neighbour. Don't fix laptops now — fix at the break.
 3. **00:10 – 00:15 — The three claims.** State them out loud, and explain each one:
-   - **Structured intent beats clever prompting.** The model fills every gap with an assumption — language, schema, architecture, what "done" looks like. A `CLAUDE.md` and a one-page PRD fill those gaps before the first token of code is generated. Once they do, the good prompt can be *short*, because the structure carries the load. You'll see this in five minutes.
-   - **Verification is what makes the demo real.** An eval is a saved input, the known-right answer, and an automated check that they match. Nothing more. That check turns "it looks right in the demo" into "the same behaviour is guaranteed on every input, every model update, every refactor." A demo that isn't tested is just a demo.
+   - **Structured intent beats clever prompting.** Left to guess, the model picks a programming language, invents a data structure (the "schema" — the shape of the data it stores), and decides what "done" looks like. A `CLAUDE.md` (a plain-text instruction file for Claude) and a one-page PRD (a short spec saying what the tool must do) fill those gaps before a line of code is generated. Once they do, the good prompt can be *short* — the files carry the load. You'll see this in five minutes.
+   - **Verification is what makes the demo real.** An eval (short for evaluation) is a saved test: an input you prepared, the correct output you labelled by hand, and a script that checks whether they still match after any change. Nothing more. For a business: that check is the difference between "it worked in the demo" and "it works every time, for every receipt format, after every update." A demo that isn't tested is just a demo.
    - **Claude Code is a collaborator, not a wish-granting genie.** It arrived this morning with no context about your project. Given a clear brief — `PRD.md`, `CLAUDE.md`, a plan — it does exceptional work. Given a vague wish, it makes reasonable guesses that compound into a codebase you didn't want. The workshop teaches you to brief it, read the plan, and correct it via files.
 
    > **Before the session:** Share **[How Claude Code Works](viewer.html?file=resources/how-claude-code-works.md)** at T-24 hours. Attendees who read it arrive with the mental model in place; Block 1 reinforces it rather than introducing it cold.
@@ -25,7 +27,7 @@ build me a receipts tool
 
 What you'll see: Claude infers a stack, picks a name, makes up a schema, drops a single Python file with everything in it, no tests, no `CLAUDE.md`, no PRD. It might even run. It will not be the thing you wanted, and you cannot tell why — because you never said what you wanted.
 
-Stop. Open a new terminal in the seed repo (which has `PRD.md` and `CLAUDE.md` already). Activate Plan Mode with **Shift + Tab** twice. Paste:
+Stop. Open a new terminal in the seed repo (which has `PRD.md` and `CLAUDE.md` already). Activate **Plan Mode** (a special mode where Claude can only plan, not write code — press **Shift + Tab** twice to toggle it on). Paste:
 
 ```text
 Read PRD.md and CLAUDE.md. Plan the minimum implementation that
@@ -34,6 +36,8 @@ Produce a numbered plan listing the files you will create or modify,
 in the order you will modify them, and the test you will run after
 each step to verify. Stop after the plan and wait for my approval.
 ```
+
+*(Acceptance criteria are the specific, checkable conditions in the PRD that define when the tool is "done" — e.g. "running `receipts add inbox/` twice adds zero rows the second time." If the tool does that, it passes. If not, it fails. No ambiguity.)*
 
 What you'll see: Claude reads both files, produces a 6–10 step plan that names the files it will touch in order, with a test gate after each step. Nothing is written to disk.
 
