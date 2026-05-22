@@ -14,6 +14,14 @@ Each turn works like this:
 2. **Act through tools.** Claude can Read files, Edit files, Run Bash commands, Search across a codebase. Each tool call is visible to you before it executes (in default mode). You are in the loop.
 3. **Wait for your review.** Claude stops after each action. It doesn't chain 200 edits together unilaterally.
 
+```mermaid
+flowchart LR
+    msg(["Your message"]) --> read["Read context\nCLAUDE.md · PRD.md · open files"]
+    read --> act["Act through tools\nRead · Edit · Bash · Search"]
+    act --> review(["Your review"])
+    review -->|next turn| read
+```
+
 **The critical implication:** you steer Claude Code by editing files, not by arguing in chat. A line in `CLAUDE.md` that says *"never call Claude inside a test"* does more work than a paragraph of in-prompt explanation — because it is re-read on every turn.
 
 ### Plan Mode: tool-level enforcement
@@ -21,6 +29,16 @@ Each turn works like this:
 When Plan Mode is on, the edit and bash tools are disabled at the framework level. Claude physically cannot write a file, run a command, or modify anything. It can only Read, Search, and produce a plan.
 
 This is not a suggestion. It is enforced by the tool registry, not by Claude's willingness to comply. In Plan Mode you get a written plan, you read it, you push back on anything wrong, and then you approve. Boris Cherny, the engineer who built Claude Code: *"start in Plan Mode, iterate until the plan is right, switch to Auto-Accept, and let Claude one-shot the implementation. A good plan is really important."*
+
+```mermaid
+flowchart TD
+    on(["Plan Mode ON"]) --> locked["Read + Search only\nEdit and Bash are disabled"]
+    locked --> plan["Claude writes a plan"]
+    plan --> review{{"You review"}}
+    review -->|"push back"| plan
+    review -->|"approve"| auto["Switch to Auto-Accept"]
+    auto --> impl["One-shot implementation"]
+```
 
 ### Subagents
 

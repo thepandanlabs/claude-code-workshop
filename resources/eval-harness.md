@@ -8,6 +8,14 @@ The single most important file in the workshop is `tests/test_report.py`. Everyt
 
 ## Three layers, ~80 lines total
 
+```mermaid
+flowchart TD
+    L1["Layer 1 — Golden tests\nDoes the CSV match the golden file byte for byte?\nCheap · fast · run on every change"]
+    L2["Layer 2 — Schema validation\nDoes every extraction pass the Pydantic model?\nCheap · fast · run on every extraction"]
+    L3["Layer 3 — LLM-as-judge\nIs the assigned category correct?\nSlow · costs tokens · run on significant changes only"]
+    L1 --> L2 --> L3
+```
+
 | Layer | What it checks | Cost | When to run |
 |---|---|---|---|
 | **Layer 1 — Deterministic golden tests** | Does the CSV match the golden file byte for byte? | Cheap, fast | On every change |
@@ -140,6 +148,16 @@ if __name__ == "__main__":
 We don't run Layer 3 during the 2-hour workshop. The file ships in the repo as a starting point for anyone who wants to add it later.
 
 ## How to use the harness in the build loop
+
+```mermaid
+flowchart LR
+    impl["Implement\nnext step"] --> test["pytest tests/"]
+    test -->|"red ✗"| paste["Paste failure to Claude\nverbatim — don't paraphrase"]
+    paste --> fix["Claude diagnoses\nand fixes"]
+    fix --> impl
+    test -->|"green ✓"| commit["Commit\nMove to next step"]
+    commit --> impl
+```
 
 The rhythm:
 
