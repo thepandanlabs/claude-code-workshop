@@ -5,6 +5,22 @@
 
 > **Not familiar with the jargon?** Check the [Glossary](viewer.html?file=resources/glossary.md) — plain-language definitions for every term used in this workshop, written for non-techies.
 
+## Opening reframe (say this before anything else at 00:10)
+
+Developer attendees arrive with a specific assumption: they'll be typing code alongside Claude, steering it line by line, fixing what it gets wrong. That's the wrong mental model for Claude Code, and it produces worse results than starting fresh. Correct it before anything else:
+
+> *"Before we get into it — a quick reframe on what we're actually doing today.*
+>
+> *You already know how to code. That's not the skill we're practising. The skill today is specification: making your intent precise enough that another intelligent agent can execute it correctly, without asking you questions mid-way.*
+>
+> *Most developers are worse at this than they expect. When you write code yourself, the implementation lives in your head — you fill in gaps instinctively. When you brief an AI, every gap you leave becomes an assumption it makes. Some of those assumptions are fine. Some aren't. The ones that aren't compound.*
+>
+> *The three-file discipline — PRD, CLAUDE.md, tests — is how you externalise your intent before the first line of code is written. Once you do that, the actual generation is fast and usually right. Skip it, and you spend the session patching a codebase that was never quite what you wanted.*
+>
+> *Today: you write the spec, approve the plan, verify the output. Claude writes the code. Your job is to make sure the spec is tight enough that you'd be happy with whatever it builds."*
+
+This reframe pre-empts the most common anti-pattern: attendees who start prompting Claude conversationally, mid-task, without files. The reframe makes the three-file discipline feel like the point — not a formality before the "real" work.
+
 ## What happens in this block
 
 1. **00:00 – 00:05 — Soft start.** People settle in, order coffee, find power. No content. Late arrivals join.
@@ -51,6 +67,7 @@ What you'll see: Claude reads both files, produces a 6–10 step plan that names
 
 ## Outputs from this block
 
+- Every attendee has heard the reframe: the skill is specification, not code generation.
 - Every attendee can run `claude` and reach a prompt.
 - Every attendee has seen, in a single room, the audible difference between a one-line prompt and a structured-intent prompt.
 - The three claims are on the table.
