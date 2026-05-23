@@ -70,21 +70,32 @@ If you're below 3.11, install via [python.org](https://www.python.org/downloads/
 
 ## 4. The seed repo cloned
 
-Don't try to clone at the coffee shop on shared Wi-Fi — do this at home:
+Don't try to clone at the coffee shop on shared Wi-Fi — do this at home.
+
+The seed lives inside the workshop repo, in the `seed/` subfolder. Clone the workshop repo and navigate into it:
 
 ```bash
-git clone <workshop-seed-repo-url>
-cd workshop-seed-repo
+git clone https://github.com/thepandanlabs/claude-code-workshop.git
+cd claude-code-workshop/seed
 ```
 
-(The facilitator will share the exact URL ahead of time.)
+Then confirm the test harness loads:
 
-The repo ships with:
+```bash
+uv sync                        # or: pip install -e .
+pytest tests/ --collect-only   # should list 3 tests
+claude /prime                  # should read the PRD back to you
+```
+
+If `pytest --collect-only` lists three tests and `/prime` reads the PRD back to you, you're ready.
+
+The seed folder ships with:
 
 - `PRD.md` — the one-page spec for the receipts CLI.
 - `CLAUDE.md` — the codebase conventions.
 - `.claude/commands/` — the four slash commands (`/prime`, `/plan`, `/implement`, `/verify`).
 - `inbox/` — ten sample receipt files for the build.
+- `src/receipts/` — stub source files (empty — Claude builds the implementation during the workshop).
 - `tests/` — the starter automated test suite, including golden fixtures (saved examples of correct output that every future run is compared against).
 
 ## Also helpful

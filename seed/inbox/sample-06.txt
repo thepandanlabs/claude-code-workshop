@@ -1,0 +1,15 @@
+[TODO: Replace with a realistic receipt in text format]
+Sample receipt 06 — placeholder for workshop seed repo.
+
+Fields to be extractable by Claude:
+- date (YYYY-MM-DD)
+- vendor (business name)
+- category (groceries|dining|transport|utilities|office|other)
+- amount (numeric)
+- currency (SAR|USD|EUR|GBP|other)
+
+Example content:
+  Receipt from [Vendor Name]
+  Date: 2026-05-006
+  Items: ...
+  Total: [amount] [currency]

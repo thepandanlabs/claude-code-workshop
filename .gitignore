@@ -1,9 +1,11 @@
 # Workshop source / brainstorm — not part of the published site
 Claude code workshop for beginners.md
 
-# Claude Code project files — local context only
+# Claude Code project files — local context only (root-level only, not seed/)
 CLAUDE.md
 .claude/
+!seed/.claude/
+!seed/.claude/**
 
 # macOS
 .DS_Store
