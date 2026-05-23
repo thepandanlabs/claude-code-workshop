@@ -151,6 +151,20 @@
     color: #D17D59;
     background-color: rgba(209, 125, 89, 0.12);
   }
+  /* Terminal output preview */
+  .term-output {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    color: hsl(0 0% 72%);
+    white-space: pre;
+  }
+  @media (min-width: 640px)  { .term-output { font-size: 0.75rem; } }
+  @media (min-width: 1024px) { .term-output { font-size: 0.8125rem; } }
+  .term-cmd  { color: #D17D59; }
+  .term-ok   { color: #7EC8A4; }
+  .term-dim  { color: hsl(0 0% 44%); }
+  .term-bold { color: hsl(0 0% 92%); font-weight: 600; }
   .heart {
     display: inline-block;
     color: #D17D59;
@@ -304,6 +318,47 @@
 
     <div class="text-center mt-8">
       <a href="viewer.html?file=resources/how-claude-code-works.md" class="btn btn-primary">Read the full mental model →</a>
+    </div>
+  </section>
+
+  <!-- ===== What Will You Make ===== -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-semibold mb-1 text-center">What Will You Make</h2>
+    <p class="text-fg-muted text-sm mb-6 text-center">A receipts CLI — built end to end in two hours. Folder in, structured CSV out.</p>
+
+    <div class="terminal-box">
+      <span class="terminal-box-label">receipts · live session output</span>
+      <div class="p-6 md:p-8">
+        <div class="term-output"><span class="term-cmd">$ receipts add inbox/</span>
+<span class="term-dim">Processing 10 receipts...</span>
+<span class="term-ok">✓</span> sample-01.txt  <span class="term-bold">Careem</span>           <span class="term-dim">transport   SAR 24.50   2026-05-01</span>
+<span class="term-ok">✓</span> sample-02.txt  <span class="term-bold">Tamimi Markets</span>   <span class="term-dim">groceries   SAR 312.80  2026-05-03</span>
+<span class="term-ok">✓</span> sample-03.txt  <span class="term-bold">Starbucks</span>        <span class="term-dim">dining      SAR 42.00   2026-05-05</span>
+<span class="term-ok">✓</span> sample-04.txt  <span class="term-bold">STC</span>              <span class="term-dim">utilities   SAR 199.00  2026-05-07</span>
+<span class="term-ok">✓</span> sample-05.txt  <span class="term-bold">Amazon.sa</span>        <span class="term-dim">office      SAR 540.00  2026-05-09</span>
+<span class="term-ok">✓</span> sample-06.txt  <span class="term-bold">Jarir</span>            <span class="term-dim">office      SAR 275.00  2026-05-12</span>
+<span class="term-ok">✓</span> sample-07.txt  <span class="term-bold">Al Baik</span>          <span class="term-dim">dining      SAR 38.50   2026-05-14</span>
+<span class="term-ok">✓</span> sample-08.txt  <span class="term-bold">Noon</span>             <span class="term-dim">office      SAR 189.00  2026-05-16</span>
+<span class="term-ok">✓</span> sample-09.txt  <span class="term-bold">Uber</span>             <span class="term-dim">transport   SAR 31.00   2026-05-19</span>
+<span class="term-ok">✓</span> sample-10.txt  <span class="term-bold">Panda Retail</span>     <span class="term-dim">groceries   SAR 228.40  2026-05-21</span>
+<span class="term-dim">10 receipts added to ledger.db</span>
+
+<span class="term-cmd">$ receipts add inbox/</span>
+<span class="term-dim">skipped 10 duplicates. 0 new records.</span>
+
+<span class="term-cmd">$ receipts report --month 2026-05 --format csv</span>
+<span class="term-dim">date,vendor,category,amount,currency,source_file</span>
+<span class="term-dim">2026-05-01,Careem,transport,24.50,SAR,sample-01.txt</span>
+<span class="term-dim">2026-05-03,Tamimi Markets,groceries,312.80,SAR,sample-02.txt</span>
+<span class="term-dim">2026-05-05,Starbucks,dining,42.00,SAR,sample-03.txt</span>
+<span class="term-dim">...</span>
+
+<span class="term-cmd">$ pytest tests/ -v</span>
+<span class="term-ok">PASSED</span> <span class="term-dim">tests/test_ledger.py::test_idempotent</span>
+<span class="term-ok">PASSED</span> <span class="term-dim">tests/test_schema.py::test_extraction_schema</span>
+<span class="term-ok">PASSED</span> <span class="term-dim">tests/test_report.py::test_golden_csv</span>
+<span class="term-bold">3 passed</span> <span class="term-dim">in 0.42s</span></div>
+      </div>
     </div>
   </section>
 
