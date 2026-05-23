@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receipts — Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background:#262624; color:hsl(0 0% 98%); font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; }
+  .accent { color:#D17D59; }
+  .card { background:#2e2e2c; border:1px solid hsl(240 3.7% 15.9%); border-radius:0.5rem; padding:1rem 1.25rem; }
+  .badge { display:inline-block; padding:0.15rem 0.5rem; border-radius:0.25rem; font-size:0.625rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; }
+  .filter-btn { padding:0.35rem 0.85rem; border-radius:0.375rem; font-size:0.75rem; font-weight:600; border:1px solid hsl(240 3.7% 20%); background:transparent; color:hsl(0 0% 55%); cursor:pointer; transition:all 0.12s; }
+  .filter-btn.active { border-color:#D17D59; color:#D17D59; background:rgba(209,125,89,0.08); }
+  .filter-btn:hover:not(.active) { border-color:hsl(240 3.7% 30%); color:hsl(0 0% 75%); }
+  .stat-box { background:#2e2e2c; border:1px solid hsl(240 3.7% 15.9%); border-radius:0.5rem; padding:0.875rem 1.25rem; text-align:center; }
+  .sample-banner { background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.25); border-radius:0.5rem; padding:0.75rem 1rem; color:#EAB308; font-size:0.75rem; margin-bottom:1.5rem; }
+  .bar-bg { background:hsl(240 3.7% 12%); border-radius:0.25rem; height:0.5rem; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:0.25rem; background:#D17D59; transition:width 0.4s ease; }
+  table { width:100%; border-collapse:collapse; font-size:0.8125rem; }
+  th { text-align:left; padding:0.5rem 0.75rem; color:hsl(0 0% 44%); font-size:0.6875rem; letter-spacing:0.05em; text-transform:uppercase; border-bottom:1px solid hsl(240 3.7% 15.9%); }
+  td { padding:0.625rem 0.75rem; color:hsl(0 0% 82%); border-bottom:1px solid hsl(240 3.7% 10%); }
+  tr:hover td { background:rgba(255,255,255,0.02); }
+  #search { background:#2e2e2c; border:1px solid hsl(240 3.7% 20%); border-radius:0.375rem; padding:0.375rem 0.75rem; color:hsl(0 0% 88%); font-size:0.8125rem; font-family:inherit; outline:none; }
+  #search:focus { border-color:#D17D59; }
+  #search::placeholder { color:hsl(0 0% 36%); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<div class="max-w-4xl mx-auto px-5 py-10">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <div class="text-xs accent font-bold tracking-widest uppercase mb-1">receipts · ledger</div>
+      <h1 class="text-2xl font-bold" style="color:hsl(0 0% 98%);letter-spacing:-0.02em;">Dashboard</h1>
+    </div>
+    <div class="text-xs" style="color:hsl(0 0% 36%);" id="exported-at"></div>
+  </div>
+
+  <!-- Sample banner -->
+  <div class="sample-banner" id="sample-banner" style="display:none;">
+    ⚠ Showing sample data. Run <code style="background:rgba(234,179,8,0.12);padding:0.1rem 0.3rem;border-radius:3px;">receipts export</code> then refresh to load your real ledger.
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8" id="stats"></div>
+
+  <!-- Category breakdown -->
+  <div class="card mb-6">
+    <div style="font-size:0.6875rem;color:#D17D59;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem;">By category</div>
+    <div id="breakdown" class="flex flex-col gap-3"></div>
+  </div>
+
+  <!-- Controls + Table -->
+  <div class="flex flex-wrap items-center gap-2 mb-4">
+    <div class="flex gap-1 flex-wrap" id="cat-filters"></div>
+    <div class="ml-auto">
+      <input id="search" type="text" placeholder="Filter by vendor…" oninput="renderTable()">
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th><th>Vendor</th><th>Category</th><th style="text-align:right;">Amount</th><th>Currency</th><th>File</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <div id="empty" class="text-center py-8" style="color:hsl(0 0% 36%);display:none;">No records match this filter.</div>
+  </div>
+
+</div>
+
+<script>
+const CAT_COLORS = {
+  groceries:'#7EC8A4', dining:'#D17D59', transport:'#60A5FA',
+  utilities:'#A78BFA', office:'#F472B6', other:'hsl(0 0% 55%)'
+};
+
+const SAMPLE = {
+  exported_at: new Date().toISOString(),
+  is_sample: true,
+  records: [
+    { date:"2026-05-01", vendor:"Careem",         category:"transport", amount:24.50,  currency:"SAR", source_file:"sample-01.txt" },
+    { date:"2026-05-03", vendor:"Tamimi Markets", category:"groceries", amount:312.80, currency:"SAR", source_file:"sample-02.txt" },
+    { date:"2026-05-05", vendor:"Starbucks",      category:"dining",    amount:42.00,  currency:"SAR", source_file:"sample-03.txt" },
+    { date:"2026-05-07", vendor:"STC",            category:"utilities", amount:199.00, currency:"SAR", source_file:"sample-04.txt" },
+    { date:"2026-05-09", vendor:"Amazon.sa",      category:"office",    amount:540.00, currency:"SAR", source_file:"sample-05.txt" },
+    { date:"2026-05-12", vendor:"Jarir",          category:"office",    amount:275.00, currency:"SAR", source_file:"sample-06.txt" },
+    { date:"2026-05-14", vendor:"Al Baik",        category:"dining",    amount:38.50,  currency:"SAR", source_file:"sample-07.txt" },
+    { date:"2026-05-16", vendor:"Noon",           category:"office",    amount:189.00, currency:"SAR", source_file:"sample-08.txt" },
+    { date:"2026-05-19", vendor:"Uber",           category:"transport", amount:31.00,  currency:"SAR", source_file:"sample-09.txt" },
+    { date:"2026-05-21", vendor:"Panda Retail",   category:"groceries", amount:228.40, currency:"SAR", source_file:"sample-10.txt" },
+  ]
+};
+
+let ALL = [];
+let activecat = 'all';
+
+async function init() {
+  let data = null;
+  try {
+    const r = await fetch('data.json');
+    if (r.ok) data = await r.json();
+  } catch(_) {}
+
+  if (!data) {
+    data = SAMPLE;
+    document.getElementById('sample-banner').style.display = 'block';
+  }
+
+  ALL = data.records || [];
+  if (data.exported_at) {
+    document.getElementById('exported-at').textContent =
+      'exported ' + new Date(data.exported_at).toLocaleString();
+  }
+
+  renderStats();
+  renderBreakdown();
+  renderCatFilters();
+  renderTable();
+}
+
+function renderStats() {
+  const total   = ALL.reduce((s,r) => s + (r.amount||0), 0);
+  const months  = new Set(ALL.map(r => r.date.slice(0,7))).size;
+  const vendors = new Set(ALL.map(r => r.vendor)).size;
+  const cats    = new Set(ALL.map(r => r.category)).size;
+  const currency= ALL[0]?.currency || 'SAR';
+  document.getElementById('stats').innerHTML = [
+    [total.toFixed(2) + ' ' + currency, 'total spent',    '#D17D59'],
+    [ALL.length,                         'receipts',        'hsl(0 0% 78%)'],
+    [vendors,                            'vendors',         'hsl(0 0% 55%)'],
+    [months > 1 ? months + ' mo' : ALL[0]?.date.slice(0,7) || '—', 'period', 'hsl(0 0% 44%)'],
+  ].map(([val, label, col]) => `
+    <div class="stat-box">
+      <div style="font-size:1.375rem;font-weight:700;color:${col};line-height:1;">${val}</div>
+      <div style="font-size:0.6875rem;color:hsl(0 0% 44%);margin-top:0.25rem;">${label}</div>
+    </div>`).join('');
+}
+
+function renderBreakdown() {
+  const totals = {};
+  ALL.forEach(r => { totals[r.category] = (totals[r.category]||0) + r.amount; });
+  const max = Math.max(...Object.values(totals));
+  const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1]);
+  document.getElementById('breakdown').innerHTML = sorted.map(([cat, amt]) => `
+    <div class="flex items-center gap-3">
+      <div style="width:5.5rem;font-size:0.6875rem;color:${CAT_COLORS[cat]||'hsl(0 0% 55%)'};text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0;">${cat}</div>
+      <div class="bar-bg flex-1"><div class="bar-fill" style="width:${(amt/max*100).toFixed(1)}%;background:${CAT_COLORS[cat]||'#D17D59'};"></div></div>
+      <div style="font-size:0.75rem;color:hsl(0 0% 66%);width:5rem;text-align:right;flex-shrink:0;">${amt.toFixed(2)} ${ALL[0]?.currency||'SAR'}</div>
+    </div>`).join('');
+}
+
+function renderCatFilters() {
+  const cats = ['all', ...new Set(ALL.map(r => r.category)).values()];
+  document.getElementById('cat-filters').innerHTML = cats.map(c => `
+    <button class="filter-btn${c===activecat?' active':''}" data-cat="${c}" onclick="setCat('${c}')">${c==='all'?'All':c}</button>`).join('');
+}
+
+function setCat(cat) {
+  activecat = cat;
+  document.querySelectorAll('[data-cat]').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderTable();
+}
+
+function renderTable() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const rows = ALL.filter(r => {
+    if (activecat !== 'all' && r.category !== activecat) return false;
+    if (q && !r.vendor.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const tbody = document.getElementById('table-body');
+  const empty = document.getElementById('empty');
+  if (!rows.length) { tbody.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.date}</td>
+      <td style="color:hsl(0 0% 92%);">${r.vendor}</td>
+      <td><span style="color:${CAT_COLORS[r.category]||'hsl(0 0% 55%)'};font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;">${r.category}</span></td>
+      <td style="text-align:right;color:hsl(0 0% 88%);">${r.amount.toFixed(2)}</td>
+      <td style="color:hsl(0 0% 44%);">${r.currency}</td>
+      <td style="color:hsl(0 0% 36%);font-size:0.6875rem;">${r.source_file}</td>
+    </tr>`).join('');
+}
+
+init();
+</script>
+</body>
+</html>

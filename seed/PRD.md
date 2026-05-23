@@ -14,6 +14,7 @@ A single user, on their own laptop. No multi-tenant, no auth.
 2. `receipts list [--vendor X] [--since DATE] [--until DATE]` — print matching ledger rows to stdout, one per line, tab-separated.
 3. `receipts report --month YYYY-MM --format csv` — print a CSV with header row: `date, vendor, category, amount, currency, source_file`. Rows sorted by date ascending, then by source_file ascending.
 4. Idempotency: re-running `add` on the same folder produces zero new rows and prints "skipped N duplicates".
+5. `receipts export [--month YYYY-MM] [--output PATH]` — write matching records to a JSON file (default: `data.json` in the current directory). Consumed by `dashboard.html`.
 
 ## Out of scope (v0.1)
 
@@ -56,3 +57,5 @@ must be byte-identical across runs. This is what the test suite asserts.
 - [ ] Re-running it adds zero rows and reports ten duplicates
 - [ ] `receipts report --month 2026-05 --format csv` matches `tests/golden/may.csv`
 - [ ] `--help` is informative on every subcommand
+- [ ] `receipts export` writes `data.json` with all ledger records
+- [ ] Opening `dashboard.html` in a browser after export renders all records visually
