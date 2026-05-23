@@ -3,6 +3,19 @@
 **Time:** 01:25 – 01:40
 **Goal:** Every attendee sees a test fail, watches Claude read the failure, and watches the test pass. This is the workshop's central beat.
 
+<!-- participant-start -->
+## Block 4 — What to do
+
+This block makes the work real. Follow these steps in order.
+
+1. Run `pytest` — note which tests pass and which fail
+2. If a test fails: paste the error into Claude Code and run `/verify`
+3. Watch Claude read the failure and propose a fix — approve it
+4. Run `pytest` again — all tests should pass now
+5. Run `receipts add inbox/` twice — confirm zero new rows the second time
+6. Run `receipts export` and open `dashboard.html` in your browser — your ledger should appear
+<!-- participant-end -->
+
 ## Why this block exists
 
 A chat-tab user shows you something that "works" by running it once. A builder shows you something that works by running a test suite. The difference between the two is the difference between "looks right" and "is right."

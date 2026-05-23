@@ -3,6 +3,21 @@
 **Time:** 01:40 – 01:50
 **Goal:** Every attendee leaves with a clear next step — one extension track chosen, and a starting prompt either already pasted into Claude Code or saved for the evening.
 
+<!-- participant-start -->
+## Block 5 — What to do
+
+10 minutes. Pick one track and start it.
+
+1. Choose by what you'd actually use:
+   - **Track A** — CSV report (simplest, good starting point)
+   - **Track B** — Category tags (richer data, good for expense sorting)
+   - **Track C** — Currency conversion (good for multi-currency contexts)
+   - **Track D** — Scheduled export (automated monthly reports)
+2. Open the track page from the workshop home
+3. Enable Plan Mode, then run `/plan` with the track's starter prompt
+4. If time allows: exit Plan Mode and run `/implement`
+<!-- participant-end -->
+
 ## The four tracks
 
 Each one extends the same `receipts` CLI. Mobile is excluded. Pick by what you'd actually use — PMs and BDMs often find Track C or D the most interesting to demo; developers reach for Track B; anyone unsure should start with Track A.

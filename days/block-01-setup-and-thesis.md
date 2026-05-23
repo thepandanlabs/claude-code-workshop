@@ -5,6 +5,16 @@
 
 > **Not familiar with the jargon?** Check the [Glossary](viewer.html?file=resources/glossary.md) — plain-language definitions for every term used in this workshop, written for non-techies.
 
+<!-- participant-start -->
+## Block 1 — What to do
+
+Settle in and watch. This block is the facilitator's — no code yet.
+
+1. Run `claude --version` in your terminal when prompted.
+2. Run `claude doctor` — green checkmarks means you're ready.
+3. Watch the two-prompt demo. When the facilitator asks *"What's missing?"* — answer out loud.
+<!-- participant-end -->
+
 ## Opening reframe (say this before anything else at 00:10)
 
 Developer attendees arrive with a specific assumption: they'll be typing code alongside Claude, steering it line by line, fixing what it gets wrong. That's the wrong mental model for Claude Code, and it produces worse results than starting fresh. Correct it before anything else:

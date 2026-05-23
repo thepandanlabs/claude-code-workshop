@@ -204,6 +204,32 @@
   #toc a.toc-active { color: #D17D59; border-left-color: #D17D59; }
   #toc a.toc-h3 { padding-left: 1.375rem; margin-left: -0.625rem; font-size: 0.775rem; }
   .font-btn:hover { color: #D17D59 !important; }
+  /* Audience tab bar */
+  .view-participant { display: none; }
+  body.mode-participant .view-participant { display: block; }
+  body.mode-participant .view-facilitator { display: none; }
+  .view-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid hsl(240 3.7% 15.9%);
+  }
+  .view-tab {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    background: none;
+    color: hsl(0 0% 52%);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-family: inherit;
+    transition: color 0.12s, border-color 0.12s;
+    letter-spacing: 0.02em;
+  }
+  .view-tab.active { color: #D17D59; border-bottom-color: #D17D59; }
+  .view-tab:hover:not(.active) { color: hsl(0 0% 82%); }
 </style>
 </head>
 <body>
@@ -237,9 +263,57 @@
   const params = new URLSearchParams(window.location.search);
   const file = params.get('file');
   const content = document.getElementById('content');
+  const isDaysFile = file && file.startsWith('days/');
+  if (isDaysFile) {
+    document.body.classList.add('mode-' + (localStorage.getItem('workshopView') || 'facilitator'));
+  }
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderWithAudience(md) {
+    var PSTART = '<!-- participant-start -->';
+    var PEND   = '<!-- participant-end -->';
+    var html = '', rest = md;
+    while (rest.length) {
+      var si = rest.indexOf(PSTART);
+      if (si === -1) { html += '<div class="view-facilitator">' + marked.parse(rest) + '</div>'; break; }
+      if (si > 0) html += '<div class="view-facilitator">' + marked.parse(rest.slice(0, si)) + '</div>';
+      var after = rest.slice(si + PSTART.length);
+      var ei = after.indexOf(PEND);
+      if (ei === -1) { html += '<div class="view-participant">' + marked.parse(after) + '</div>'; break; }
+      html += '<div class="view-participant">' + marked.parse(after.slice(0, ei)) + '</div>';
+      rest = after.slice(ei + PEND.length);
+    }
+    return html;
+  }
+
+  function initTabBar() {
+    if (!isDaysFile || !content.querySelector('.view-participant')) return;
+    var savedMode = localStorage.getItem('workshopView') || 'facilitator';
+    var bar = document.createElement('div');
+    bar.id = 'view-tabs';
+    bar.className = 'view-tabs';
+    bar.innerHTML =
+      '<button class="view-tab' + (savedMode === 'facilitator' ? ' active' : '') + '" data-view="facilitator">Facilitator</button>' +
+      '<button class="view-tab' + (savedMode === 'participant' ? ' active' : '') + '" data-view="participant">Participant</button>';
+    content.parentNode.insertBefore(bar, content);
+    bar.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-view]');
+      if (!btn) return;
+      var mode = btn.dataset.view;
+      document.body.classList.remove('mode-facilitator', 'mode-participant');
+      document.body.classList.add('mode-' + mode);
+      localStorage.setItem('workshopView', mode);
+      bar.querySelectorAll('.view-tab').forEach(function(b) { b.classList.toggle('active', b.dataset.view === mode); });
+      var sb = document.getElementById('sidebar');
+      if (sb) sb.style.display = mode === 'participant' ? 'none' : '';
+    });
+    if (savedMode === 'participant') {
+      var sb = document.getElementById('sidebar');
+      if (sb) sb.style.display = 'none';
+    }
   }
 
   // Whitelist: only allow files under known content dirs, .md extension, no traversal.
@@ -346,7 +420,7 @@
             return hljs.highlightAuto(code).value;
           }
         });
-        content.innerHTML = marked.parse(md);
+        content.innerHTML = isDaysFile ? renderWithAudience(md) : marked.parse(md);
         document.querySelectorAll('pre code').forEach(b => {
           try { hljs.highlightElement(b); } catch (e) {}
         });
@@ -355,6 +429,7 @@
         if (h1) document.title = h1.textContent + ' — Pandan Labs';
         buildTOC();
         setupScrollSpy();
+        initTabBar();
       })
       .catch(err => {
         content.innerHTML = `

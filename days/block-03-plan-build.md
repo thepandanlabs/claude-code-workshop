@@ -3,6 +3,29 @@
 **Time:** 00:40 – 01:25
 **Goal:** Every attendee finishes the block with a working `receipts add` and `receipts list` against the supplied samples. The harness in Block 4 will tell us whether it's right.
 
+<!-- participant-start -->
+## Block 3 — What to do
+
+45 minutes. Work on your own laptop. The facilitator circulates.
+
+**Phase 1 (00:40–00:55) — Prime and plan**
+
+1. Run `/prime` if you haven't already
+2. Enable Plan Mode (Shift + Tab twice), then run `/plan`
+3. Read the plan Claude produces — approve it, or correct one thing first
+
+**Phase 2 (00:55–01:15) — Build**
+
+1. Exit Plan Mode (Shift + Tab twice), then run `/implement`
+2. Watch the files being created — don't interrupt unless something looks clearly wrong
+
+**Phase 3 (01:15–01:25) — First check**
+
+1. Run `receipts add inbox/` against the sample files
+2. Run it again — confirm zero new rows the second time (idempotency check)
+3. Run `receipts list` — do the records look right?
+<!-- participant-end -->
+
 ## Block shape
 
 This is the longest block of the workshop — 45 minutes — and it is mostly silent. Attendees work on their own laptops. The facilitator circulates, troubleshoots quietly, and resists the urge to over-narrate.

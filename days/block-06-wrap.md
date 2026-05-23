@@ -3,6 +3,15 @@
 **Time:** 01:50 – 02:00
 **Goal:** Close cleanly. Every attendee names one thing they'll do differently. The room remembers what it just built and why.
 
+<!-- participant-start -->
+## Block 6 — What to do
+
+Be ready to share with the room. No prep needed.
+
+- What's one thing you'll do differently in your next project because of today?
+- What surprised you most about how Claude Code worked?
+<!-- participant-end -->
+
 ## The shape
 
 | Time | Activity |

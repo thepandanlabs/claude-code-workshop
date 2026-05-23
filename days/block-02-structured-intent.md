@@ -3,6 +3,19 @@
 **Time:** 00:20 – 00:40
 **Goal:** Everyone has read and understood the PRD, the `CLAUDE.md`, and the slash commands. No code is written yet.
 
+<!-- participant-start -->
+## Block 2 — What to do
+
+Open the seed repo. Your job is to read and understand the spec before any code is written.
+
+1. `cd receipts-seed-repo` (or wherever you cloned it)
+2. Open `PRD.md` and read it — note anything unclear
+3. Open `CLAUDE.md` and read it — these are the rules Claude will follow
+4. Browse `.claude/commands/` — you'll use `/prime`, `/plan`, `/implement`, `/verify`
+5. Activate Plan Mode: press **Shift + Tab twice** in Claude Code
+6. Run `/prime` and wait for Claude to acknowledge the spec
+<!-- participant-end -->
+
 ## What happens in this block
 
 1. **00:20 – 00:25 — Walk the PRD aloud.** Open `PRD.md` from the seed repo on the facilitator's laptop. Read it section by section. Pause at *In scope* and *Out of scope* — these are the lines that prevent scope drift.
