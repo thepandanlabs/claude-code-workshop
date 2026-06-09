@@ -1,4 +1,0 @@
-# TODO: Add recorded extraction JSON fixtures here — one file per inbox sample.
-# Format: sample-01.json, sample-02.json, ..., sample-10.json
-# Each file is the JSON Claude would return for that receipt.
-# Used by conftest.py to mock the Claude API in tests.

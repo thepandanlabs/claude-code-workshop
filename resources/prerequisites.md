@@ -92,16 +92,10 @@ The seed lives inside the workshop repo, in the `seed/` subfolder:
 git clone https://github.com/thepandanlabs/claude-code-workshop.git
 cd claude-code-workshop/seed
 uv sync          # installs dependencies — should complete in under 30 seconds
+claude /prime    # should read the PRD back to you
 ```
 
-Then verify:
-
-```bash
-pytest tests/ --collect-only   # should list 3 tests
-claude /prime                  # should read the PRD back to you
-```
-
-If both commands succeed, you're ready.
+If `/prime` reads the PRD back to you, you're ready.
 
 The seed folder ships with:
 
@@ -109,8 +103,8 @@ The seed folder ships with:
 - `CLAUDE.md` — the codebase conventions.
 - `.claude/commands/` — the four slash commands (`/prime`, `/plan`, `/implement`, `/verify`).
 - `inbox/` — ten sample receipt files for the build.
-- `src/receipts/` — stub source files (empty — Claude builds the implementation during the workshop).
-- `tests/` — the starter automated test suite, including golden fixtures (saved examples of correct output that every future run is compared against).
+- `src/receipts/` — stub source files (Claude builds the implementation during the workshop).
+- `dashboard.html` — visual viewer for the exported data.
 
 ## Also helpful
 

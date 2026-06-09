@@ -3,4 +3,3 @@
 # - Prompt Claude with the file content
 # - Parse and validate the response against the schema in PRD.md
 # See PRD.md Extracted schema section for the exact JSON shape.
-# Never call this function from tests — use recorded fixtures in tests/fixtures/extractions/.

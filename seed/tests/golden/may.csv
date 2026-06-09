@@ -1,5 +1,0 @@
-date,vendor,category,amount,currency,source_file
-[TODO: Populate with expected output from 9 of the 10 inbox samples for month 2026-05]
-[NOTE: This golden file is intentionally one row short of what all 10 samples produce]
-[The first pytest run will fail — that failure is the Block 4 teaching moment]
-[After implementing correctly and finding the missing record, update this file to match full output]
