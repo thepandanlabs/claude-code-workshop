@@ -10,7 +10,8 @@ The $20/month Claude Pro plan is enough for this workshop. Monthly billing is fu
 
 - Subscribe at `claude.com/pricing` → pick **Pro**.
 - Claude Code is included with Pro at no extra cost.
-- The free plan will **not** work — Claude Code requires a paid subscription.
+- The free claude.ai plan will **not** work — Claude Code requires a subscription or API key.
+- **No subscription?** An API key costs ~SAR 0.40 per session — [see free and low-cost options](free-options.md).
 
 For Saudi Arabia specifically: Anthropic officially supports Saudi Arabia for both Claude.ai and the API. No VPN needed. See the [KSA payment notes](ksa-payments.md) page if your card is declined.
 
