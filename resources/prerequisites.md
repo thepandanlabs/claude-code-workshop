@@ -69,26 +69,39 @@ python --version   # or: python3 --version
 
 If you're below 3.11, install via [python.org](https://www.python.org/downloads/), Homebrew (`brew install python@3.12` — Homebrew is a popular tool installer for macOS), or your operating system's package manager.
 
-## 4. The seed repo cloned
+## 4. uv (Python package manager)
+
+```bash
+# macOS / Linux / WSL
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+pip install uv
+
+# Verify
+uv --version
+```
+
+## 5. The seed repo cloned
 
 Don't try to clone at the coffee shop on shared Wi-Fi — do this at home.
 
-The seed lives inside the workshop repo, in the `seed/` subfolder. Clone the workshop repo and navigate into it:
+The seed lives inside the workshop repo, in the `seed/` subfolder:
 
 ```bash
 git clone https://github.com/thepandanlabs/claude-code-workshop.git
 cd claude-code-workshop/seed
+uv sync          # installs dependencies — should complete in under 30 seconds
 ```
 
-Then confirm the test harness loads:
+Then verify:
 
 ```bash
-uv sync                        # or: pip install -e .
 pytest tests/ --collect-only   # should list 3 tests
 claude /prime                  # should read the PRD back to you
 ```
 
-If `pytest --collect-only` lists three tests and `/prime` reads the PRD back to you, you're ready.
+If both commands succeed, you're ready.
 
 The seed folder ships with:
 
